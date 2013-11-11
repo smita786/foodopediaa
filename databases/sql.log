@@ -1,0 +1,297 @@
+timestamp: 2013-11-10T14:23:41.199266
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2013-11-10T14:23:41.361166
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-11-10T14:23:41.478440
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2013-11-10T14:23:41.624406
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2013-11-10T14:23:41.761205
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2013-11-10T14:23:41.873443
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2013-11-10T15:07:00.730350
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T15:07:00.929552
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T15:07:01.063989
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T15:07:01.247566
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T15:07:01.384420
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T15:07:01.629803
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:20.127641
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:20.898016
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:21.023840
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:21.217486
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT, INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:21.329195
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-10T23:33:21.445426
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT, INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-11T02:51:11.398295
+CREATE TABLE mytable(
+    id INT AUTO_INCREMENT NOT NULL,
+    myfield VARCHAR(512),
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2013-11-11T03:18:48.919491
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:19:49.384440
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:19:51.405784
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:20:13.852692
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:20:17.898839
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:20:43.484507
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:20:54.472509
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+timestamp: 2013-11-11T03:21:28.488198
+CREATE TABLE recepies(
+    id INT AUTO_INCREMENT NOT NULL,
+    category VARCHAR(128),
+    name VARCHAR(128),
+    slug VARCHAR(128),
+    image_loc VARCHAR(512),
+    description LONGTEXT,
+    serves VARCHAR(512),
+    ingredients VARCHAR(2056),
+    cooking_time VARCHAR(128),
+    steps LONGTEXT,
+    PRIMARY KEY(id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
