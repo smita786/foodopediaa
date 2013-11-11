@@ -72,7 +72,7 @@ db.define_table('recepies',
                 db.Field('cooking_time', 'string', length=128,required=True),
                 db.Field('steps', 'text',required=True),
                 db.Field('all_ingreds','string',length=1028,required=False),
-                migrate='recepies.table'
+                migrate=False
                 )
 #########################################################################
 ## Define your tables below (or better in another model file) for example

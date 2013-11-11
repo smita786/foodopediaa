@@ -295,3 +295,7 @@ CREATE TABLE recepies(
     PRIMARY KEY(id)
 ) ENGINE=InnoDB CHARACTER SET utf8;
 success!
+timestamp: 2013-11-11T22:07:11.832331
+ALTER TABLE recepies ADD all_ingreds VARCHAR(1028);
+timestamp: 2013-11-11T22:09:30.586134
+ALTER TABLE recepies ADD all_ingreds VARCHAR(1028);
