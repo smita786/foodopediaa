@@ -157,31 +157,31 @@ background-position:left;outline:0;
         </div><!--/.nav-collapse -->
       
 
-<form id="searchbox" action="">
+<form id="searchbox" action="/{{=request.application}}/default/search">
      <fieldset id="f1">
           <label>Enter whatevere ehatever</label>
          <div class="control-group">
- <input id="search" type="text" placeholder="Search for the recipe">
-
+ <input id="search" name="ingredients" type="text" placeholder="Search for the recipe">
+ 
     <input id="submit" type="submit" value="Search">
          </div>
     </fieldset>
     <fieldset id="f2">
          <div class="control-group">
     <label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox1" value="option1"> Breakfast
+        <input type="checkbox" name="category" value="breakfast"> Breakfast
     </label>
     <label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox2" value="option2"> Lunch
+        <input type="checkbox" name="category" value="lunch"> Lunch
     </label>
     <label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox3" value="option3"> Dinner
+        <input type="checkbox" name="category"  value="dinner"> Dinner
     </label>
     <label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox3" value="option3"> Snacks
+        <input type="checkbox" name="category"  value="snacks"> Snacks
     </label>
     <label class="checkbox inline">
-        <input type="checkbox" id="inlineCheckbox3" value="option3"> Drinks
+        <input type="checkbox" name="category" value="drink"> Drinks
         <a href="#">Advanced Options<i class=" icon-circle-arrow-right"></i></a>
 
     </label>

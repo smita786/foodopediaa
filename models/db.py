@@ -71,6 +71,7 @@ db.define_table('recepies',
                 db.Field('ingredients', 'string', length=2056,required=False),
                 db.Field('cooking_time', 'string', length=128,required=True),
                 db.Field('steps', 'text',required=True),
+                db.Field('all_ingreds','string',length=1028,required=False),
                 migrate='recepies.table'
                 )
 #########################################################################
@@ -92,3 +93,27 @@ db.define_table('recepies',
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
+import logging
+
+logger = logging.getLogger(request.application)
+logger.setLevel(logging.DEBUG)
+# create file handler which logs even debug messages
+fh = logging.FileHandler('spam.log')
+fh.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+# create formatter and add it to the handlers
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+fh.setFormatter(formatter)
+# add the handlers to logger
+logger.addHandler(ch)
+logger.addHandler(fh)
+
+# 'application' code
+#logger.debug('debug message')
+#logger.info('info message')
+#logger.warn('warn message')
+#logger.error('error message')
+#logger.critical('critical message')

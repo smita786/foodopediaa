@@ -10,7 +10,7 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 import json
-
+import string
 def index():
     """
     example action using the internationalization operator T and flash
@@ -33,11 +33,55 @@ def add_recipe():
             tmp=[ingred,quant,measure]
             res.append(tmp)
         encoded_ingreds = json.dumps(res)
+        all_ingreds=json.dumps(request.vars.ingredients)
         #filename=request.vars.pic
         image = db.recepies.image_loc.store(request.vars.pic.file, request.vars.pic.filename)
-        db.recepies.insert(category=request.vars.category,name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image)
+        db.recepies.insert(category=request.vars.category,name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image,all_ingreds=all_ingreds)
         #db.mytable.insert(myfield=request.vars.category)
-        return encoded_ingreds
+        #return encoded_ingreds
+    return dict()
+    
+def search():
+    if request.vars:
+        #logger.info(request.vars)
+        search_terms=[word.strip(string.punctuation) for word in request.vars.ingredients.split(",")]
+        logger.info(search_terms)
+        q = request.vars.category
+        logger.info(q)
+        if q:
+            if not isinstance(q, basestring):
+                query1 = ( # Start off with a default query
+                              db.recepies.category.lower().like(q[0]) 
+                )
+
+                for category in q:
+                    query1 = query1 | db.recepies.category.lower().like(category)
+            else:
+                query1 = ( 
+                              db.recepies.category.lower().like(q) 
+                )
+        # Then run through each element, and search for that specific word in the test.
+        ingredients=request.vars.ingredients.split(",");
+        if request.vars.ingredients:
+            query=( # Start off with a default query
+                          db.recepies.ingredients.lower().like('%'+ingredients[0]+'%') 
+            )
+        if len(ingredients)>1:
+            for qs in filter(lambda a: a != '', ingredients):
+                query = query | db.recepies.ingredients.lower().like('%'+qs.strip()+'%')
+        if 'query1' in locals():
+            if query:
+                query=query1&query
+            else:
+                query=query1
+            
+        rows = db(query).select()
+        logger.info(query)
+        for row in rows:
+            logger.info(row.all_ingreds)
+            if row.all_ingreds and set(json.loads(row.all_ingreds)) <= set(ingredients):
+                logger.info(row.all_ingreds)
+        return rows
     return dict()
     
 def user():
