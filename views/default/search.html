@@ -1,0 +1,61 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,True}}
+{{extend 'layout.html'}}
+<style>
+    html, body{
+    height: 100%;
+}
+#wrap {
+    position:relative; /* make this relative to have the inner div absolute without breaking out */
+    width: 40%;  /* fix the width or else it'll be the entire page's width */
+}
+.result{
+
+}
+.result-content a
+{
+    font-size: 18px;
+    line-height: 20px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #3B5998;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: left
+}
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  float: left;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+}
+</style>
+<div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;">
+	<div class="result-content" style="width:60%;float: right">
+            <a href="">Recipe Name</a>
+            <p><span style="font-weight:bold">Ingredients Required: </span>abc,def,ghi,jkl</p>
+            <p><span style="font-weight:bold">Cooking time: </span>25:25min</p>
+            <div class="rating">
+            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+        </div>
+        </div>
+	<div class="result-image" style="width:30%"><img alt="" src="{{=URL('static','images/slide1.jpg')}}"></div>
+</div>
+{{block right_sidebar}}
+{{=A(T("Administrative Interface"), _href=URL('admin','default','index'), _class='btn',
+     _style='margin-top: 1em;')}}
+<h6>{{=T("Don't know what to do?")}}</h6>
+<ul>
+  <li>{{=A(T("Online examples"), _href=URL('examples','default','index'))}}</li>
+  <li><a href="http://web2py.com">web2py.com</a></li>
+  <li><a href="http://web2py.com/book">{{=T('Documentation')}}</a></li>
+</ul>
+{{end}}

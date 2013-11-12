@@ -43,7 +43,7 @@ def add_recipe():
     
 def search():
     if request.vars:
-        #logger.info(request.vars)
+        res=[]
         search_terms=[word.strip(string.punctuation) for word in request.vars.ingredients.split(",")]
         logger.info(search_terms)
         q = request.vars.category
@@ -70,17 +70,19 @@ def search():
             for qs in filter(lambda a: a != '', ingredients):
                 query = query | db.recepies.ingredients.lower().like('%'+qs.strip()+'%')
         if 'query1' in locals():
-            if query:
+            if 'query' in locals():
                 query=query1&query
             else:
                 query=query1
-            
+        
         rows = db(query).select()
-        logger.info(query)
-        for row in rows:
-            logger.info(row.all_ingreds)
-            if row.all_ingreds and set(json.loads(row.all_ingreds)) <= set(ingredients):
-                logger.info(row.all_ingreds)
+       # logger.info(rows)
+        if request.vars.ingredients:
+            for row in rows:
+                if row.all_ingreds and set(json.loads(row.all_ingreds)) <= set(ingredients):
+                    logger.info(row.all_ingreds)
+                    res.append(row)
+            return dict(rows=res)
         return rows
     return dict()
     
