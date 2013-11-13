@@ -1,29 +1,81 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
+{{left_sidebar_enabled,right_sidebar_enabled=False,True}}
 {{extend 'layout.html'}}
 <style type="text/css">
     img
     {
         height: 400px;
     }
+    
+    .imag{
+        bottom:0;
+        position:fixed;
+        top:0;
+        width:100%;
+        z-index:0;background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
+        height:100%;
+    }
+    .main{
+        margin: 15% 5% 5%;
+        background-color: wheat;
+        border: 1px;
+        border-radius: 1%;
+    }
+    .carousel-control.right{
+        right:173px;
+    } 
+    .carousel-caption{
+        width:72.5%;
+    }
+    #explore{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.5);
+    margin: 0 0 4%;
+    padding: 18px ;
+    position: relative;
+    width:88%;
+    }
+    #explore_new{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    padding: 18px ;
+    position: relative;
+    width:88%;
+    }
+    .showcase-cntnr {
+    margin-bottom: 6px;
+    margin-left: 11px;
+}
+.hubtitle{
+    margin-left: 4%;
+    margin-top:2% 
+}
+.hubtitle_new{
+    margin-left: 4%;
+    margin-top:1% 
+}
 </style>
-    <div class="carousel slide" id="myCarousel" style="width:80%;margin: auto">
+
+    <div class="carousel slide" id="myCarousel" style="width:80%;margin: 3% 3% 3% 15%;">
                 <div class="carousel-inner">
                   <div class="item active left">
-                    <img alt="" src="{{=URL('static','images/slide1.jpg')}}">
+                    <img alt="" src="{{=URL('static','images/capsicum.jpg')}}">
                     <div class="carousel-caption">
                       <h4>First Thumbnail label</h4>
                       <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                   </div>
                   <div class="item next left">
-                    <img alt="" src="{{=URL('static','images/slide2.jpg')}}">
+                    <img alt="" src="{{=URL('static','images/paneer.jpg')}}">
                     <div class="carousel-caption">
                       <h4>Second Thumbnail label</h4>
                       <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                   </div>
                   <div class="item">
-                    <img alt="" src="{{=URL('static','images/slide3.jpg')}}">
+                    <img alt="" src="{{=URL('static','images/capsicum.jpg')}}">
                     <div class="carousel-caption">
                       <h4>Third Thumbnail label</h4>
                       <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
@@ -33,6 +85,87 @@
                 <a data-slide="prev" href="#myCarousel" class="left carousel-control">‹</a>
                 <a data-slide="next" href="#myCarousel" class="right carousel-control">›</a>
               </div>
+
+<div id="explore" style="height:200px";>
+<h4 class="hubtitle">Explore Recipes...</h4>
+<div class="clearfix"></div>
+<div class="showcase-cntnr">
+        <ul class="cat-cntnr">
+        <ul class="cat-cntnr">
+        <li>
+        <a href="#"><img alt="Breakfast" src="{{=URL('static','images/breakfast_image.jpg')}}"></a>
+        <span><a href="#">Breakfast</a></span>
+        </li>
+        <li>
+        <a href="#"><img alt="lunch" src="{{=URL('static','images/lunch_image.jpg')}}"></a>
+        <span><a href="#">Lunch</a></span></li>
+        <li>
+        <a href="#"><img alt="snacksr" src="{{=URL('static','images/snack_image.jpg')}}"></a>
+        <span><a href="#">Snacks</a></span></li>
+        <li>
+        <a href="#"><img alt="dinner" src="{{=URL('static','images/dinner_image.jpg')}}"></a>
+        <span><a href="#">Dinner</a></span></li>
+        <li>
+        <a href="#"><img alt="dessert" src="{{=URL('static','images/dessert_image.jpg')}}"></a>
+        <span><a href="#">Dessert</a></span></li>
+        <li>
+        </ul>
+        </ul>
+</div>
+</div>
+<!-- <div class="clearfix"></div> -->
+<div id="explore_new" style="height:400px";>
+<h4 class="hubtitle_new">Cooking with...</h4>
+<div class="clearfix"></div>
+<div class="showcase-cntnr">
+        <ul class="cat-cntnr">
+        <ul class="cat-cntnr">
+        <li>
+        <a href="#"><img alt="Breakfast" src="{{=URL('static','images/paneer.jpg')}}"></a>
+        <span><a href="#">paneer</a></span>
+        </li>
+        <li>
+        <a href="#"><img alt="lunch" src="{{=URL('static','images/coffee.jpg')}}"></a>
+        <span><a href="#">coffee</a></span></li>
+        <li>
+        <a href="#"><img alt="snacksr" src="{{=URL('static','images/rice1.jpg')}}"></a>
+        <span><a href="#">rice</a></span></li>
+        <li>
+        <a href="#"><img alt="dinner" src="{{=URL('static','images/potato.jpg')}}"></a>
+        <span><a href="#">potato</a></span></li>
+        <li>
+        <a href="#"><img alt="dessert" src="{{=URL('static','images/carrot.jpg')}}"></a>
+        <span><a href="#">carrot</a></span></li>
+        <li>
+        </ul>
+        </ul>
+</div>
+<div class="showcase-cntnr">
+        <ul class="cat-cntnr">
+        <ul class="cat-cntnr">
+        <li>
+        <a href="#"><img alt="Breakfast" src="{{=URL('static','images/mango.jpg')}}"></a>
+        <span><a href="#">mango</a></span>
+        </li>
+        <li>
+        <a href="#"><img alt="lunch" src="{{=URL('static','images/capsicum.jpg')}}"></a>
+        <span><a href="#">capsicum</a></span></li>
+        <li>
+        <a href="#"><img alt="snacksr" src="{{=URL('static','images/chocolate.jpg')}}"></a>
+        <span><a href="#">chocolate</a></span></li>
+        <li>
+        <a href="#"><img alt="dinner" src="{{=URL('static','images/potato.jpg')}}"></a>
+        <span><a href="#">potato</a></span></li>
+        <li>
+        <a href="#"><img alt="dessert" src="{{=URL('static','images/carrot.jpg')}}"></a>
+        <span><a href="#">carrot</a></span></li>
+        <li>
+        </ul>
+        </ul>
+</div>
+</div>
+
+              
 {{block right_sidebar}}
 {{=A(T("Administrative Interface"), _href=URL('admin','default','index'), _class='btn',
      _style='margin-top: 1em;')}}
