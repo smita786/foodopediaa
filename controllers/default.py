@@ -36,7 +36,7 @@ def add_recipe():
         all_ingreds=json.dumps(request.vars.ingredients)
         #filename=request.vars.pic
         image = db.recepies.image_loc.store(request.vars.pic.file, request.vars.pic.filename)
-        db.recepies.insert(category=request.vars.category,name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image,all_ingreds=all_ingreds)
+        db.recepies.insert(category=json.dumps(request.vars.category),name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image,all_ingreds=all_ingreds)
         #db.mytable.insert(myfield=request.vars.category)
         #return encoded_ingreds
     return dict()
@@ -44,6 +44,7 @@ def add_recipe():
 def search():
     if request.vars:
         res=[]
+        res_extra=[]
         search_terms=[word.strip(string.punctuation) for word in request.vars.ingredients.split(",")]
         logger.info(search_terms)
         q = request.vars.category
@@ -51,14 +52,14 @@ def search():
         if q:
             if not isinstance(q, basestring):
                 query1 = ( # Start off with a default query
-                              db.recepies.category.lower().like(q[0]) 
+                              db.recepies.category.lower().like('%'+q[0]+'%') 
                 )
 
                 for category in q:
-                    query1 = query1 | db.recepies.category.lower().like(category)
+                    query1 = query1 | db.recepies.category.lower().like('%'+category+'%')
             else:
                 query1 = ( 
-                              db.recepies.category.lower().like(q) 
+                              db.recepies.category.lower().like('%'+q+'%')
                 )
         # Then run through each element, and search for that specific word in the test.
         ingredients=request.vars.ingredients.split(",");
@@ -79,11 +80,15 @@ def search():
        # logger.info(rows)
         if request.vars.ingredients:
             for row in rows:
+                logger.info(row.all_ingreds)
                 if row.all_ingreds and set(json.loads(row.all_ingreds)) <= set(ingredients):
-                    logger.info(row.all_ingreds)
+                    logger.info("got")
                     res.append(row)
-            return dict(rows=res)
-        return rows
+                else:
+                   res_extra.append(row)
+                   
+            return dict(primary_res=res,extra_res=res_extra)
+        return dict(primary_res=rows,extra_res=res_extra)
     return dict()
     
 def user():
