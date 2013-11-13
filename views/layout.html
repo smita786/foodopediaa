@@ -157,7 +157,7 @@ body
         <ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>
         <div class="{{='nav-collapse' if is_mobile else 'nav'}}">
           {{if response.menu:}}
-          HOME
+          <a href="{{=URL('default','index')}}">HOME</a>
           {{pass}}
         </div><!--/.nav-collapse -->
       

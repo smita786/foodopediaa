@@ -985,5 +985,11 @@ a.more {
 .centercontent img {
     margin-right: 11px;
 }
+.main{
+        margin: 15% 5% 5%;
+        background-color: wheat;
+        border: 1px;
+        border-radius: 1%;
+    }
 
 
