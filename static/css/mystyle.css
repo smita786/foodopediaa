@@ -842,7 +842,7 @@ a img.ar-MagImage {
 ul.cat-cntnr {
     display: block;
     float: left;
-    width: 101%;
+    width: 100%;
 }
 ul.cat-cntnr li {
     background-position: center center;
@@ -850,10 +850,10 @@ ul.cat-cntnr li {
     background-size: cover;
     display: block;
     float: left;
-    height: 150px;
+    height: 15%;
     margin: 0 10px;
     overflow: hidden;
-    width: 110px;
+    width: 15%;
     
 }
 
@@ -861,11 +861,13 @@ ul.cat-cntnr li > a {
     display: block;
     height: 110px;
     text-align: center;
-    width: 110px;
+    width: 100%;
 }
 ul.cat-cntnr li img {
     height: 90px;
     width: 100px;
+     border: 1px none;
+    border-radius: 10%;
 }
 ul.cat-cntnr li > span {
     float: left;

@@ -2706,6 +2706,7 @@ button.btn.btn-mini, input.btn.btn-mini[type="submit"] {
     min-height: 40px;
     padding-left: 20px;
     padding-right: 20px;
+    color: #7A7D84;
 }
 .navbar-inner:before, .navbar-inner:after {
     content: "";
@@ -2979,6 +2980,7 @@ button.btn.btn-mini, input.btn.btn-mini[type="submit"] {
     background-image: linear-gradient(to bottom, #222222, #111111);
     background-repeat: repeat-x;
     border-color: #252525;
+    color:#7A7D84;
 }
 .navbar-inverse .brand, .navbar-inverse .nav > li > a {
     color: #999999;
