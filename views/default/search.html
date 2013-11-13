@@ -1,13 +1,7 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,True}}
 {{extend 'layout.html'}}
 <style>
-    html, body{
-    height: 100%;
-}
-#wrap {
-    position:relative; /* make this relative to have the inner div absolute without breaking out */
-    width: 40%;  /* fix the width or else it'll be the entire page's width */
-}
+
 .result{
 
 }
@@ -59,3 +53,5 @@
   <li><a href="http://web2py.com/book">{{=T('Documentation')}}</a></li>
 </ul>
 {{end}}
+{{=BEAUTIFY(response._vars)}}
+{{pass}}

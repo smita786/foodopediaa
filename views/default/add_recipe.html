@@ -6,8 +6,12 @@
         <input type='number' name='quantity' placeholder='quantity' required>\n\
         <select name='measure' required>\
         <option value='tbsp'>tbsp</option>\
+        <option value='tbsp'>tbsp</option>\
          <option value='cup'>cup</option>\
          <option value='gram'>gram</option>\
+         <option value='ounce'>ounce</option>\
+           <option value='lt'>lt</option>\
+            <option value='pieces'>pieces</option>\n\
      </select><br>";
                $("#ingreds").append(app);
                return false;
@@ -16,11 +20,11 @@
 <h3>Add a new recipe</h3>
  <form method="post" enctype="multipart/form-data">
      Category:<br>
-     <input type="radio" name="category" value="breakfast" checked/>Breakfast<br>
-     <input type="radio" name="category" value="Lunch"/>Lunch<br>
-     <input type="radio" name="category" value="Dinner"/>Dinner<br>
-     <input type="radio" name="category" value="Drink"/>Drink<br>
-     <input type="radio" name="category" value="Snacks"/>Snacks<br>
+     <input type="checkbox" name="category" value="breakfast" checked/>Breakfast<br>
+     <input type="checkbox" name="category" value="Lunch"/>Lunch<br>
+     <input type="checkbox" name="category" value="Dinner"/>Dinner<br>
+     <input type="checkbox" name="category" value="Drink"/>Drink<br>
+     <input type="checkbox" name="category" value="Snacks"/>Snacks<br>
      Name:
      <input type="text" name="name" required><br>
      Slug:
@@ -34,22 +38,37 @@
      <input type="number" name="quantity" placeholder="quantity" required>
      <select name="measure">
          <option value="tbsp">tbsp</option>
+                  <option value="tsp">tsp</option>
+
          <option value="cup">cup</option>
          <option value="gram">gram</option>
+         <option value="ounce">ounce</option>
+         <option value="litre">litre</option>
+         <option value="pieces">pieces</option>
      </select><br>
      <input type='text' name="ingredients" placeholder="ingredient name" required>
      <input type="number" name="quantity" placeholder="quantity" required>
      <select name="measure">
          <option value="tbsp">tbsp</option>
+                  <option value="tsp">tsp</option>
+
          <option value="cup">cup</option>
          <option value="gram">gram</option>
+         <option value="ounce">ounce</option>
+           <option value="lt">lt</option>
+            <option value="pieces">pieces</option>
      </select><br>
      <input type='text' name="ingredients" placeholder="ingredient name" required>
      <input type="number" name="quantity" placeholder="quantity" required>
      <select name="measure">
          <option value="tbsp">tbsp</option>
+                  <option value="tsp">tsp</option>
+
          <option value="cup">cup</option>
          <option value="gram">gram</option>
+         <option value="ounce">ounce</option>
+           <option value="lt">lt</option>
+            <option value="pieces">pieces</option>
      </select><br>
      </div>
      <font onclick="newIngred()" style="color:blue;cursor: pointer">+add more</font><br>
