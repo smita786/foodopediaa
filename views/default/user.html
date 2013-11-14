@@ -1,7 +1,7 @@
 {{extend 'layout.html'}}
 <style>
 #content { display: block; width: 100%; margin: 0 auto;  }
-.clearfix:after { content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
+#content .clearfix:after { content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
 .clearfix { display: inline-block; }
 #left { display: block; width: 82%; float: left; overflow: hidden; margin-right: 3%; }
 #right { display: block; width: 13%; float: right; overflow: hidden; }
@@ -177,6 +177,11 @@ ul, ol {
 {{if request.args(0).replace('_',' ') != 'profile' :}}
 <div id="web2py_user_form">
 {{
+    if request.args(0) == 'register':
+             my_extra_element = TR(LABEL('I agree to the terms and conditions'), INPUT(_name='agree',value=True,_type='checkbox'))
+             my_extra_element=XML("<tr><td></td><td>OR, Choose one<br><img src='https://127.0.0.1/foodopediaa/default/download/recepies.image_loc.8481ad433511ffb9.67756c61626a616d756e2e6a706567.jpeg' alt='' style='float:none;margin: 0;width:95px;height:95px;margin-left:2px;border:1px transparent;border-radius:4%;'/><input type='radio' name= 'avatar' value = 'image_loc' checked style='margin-left:-12px;margin-bottom: -78px' /><img src='https://127.0.0.1/foodopediaa/default/download/recepies.image_loc.8481ad433511ffb9.67756c61626a616d756e2e6a706567.jpeg' alt='' style='float:none;margin: 0;width:95px;height:95px;margin-left:2px;border:1px transparent;border-radius:4%'/><input type='radio' name= 'avatar' value = 'image_loc' style='margin-left:-12px;margin-bottom: -78px' /><img src='https://127.0.0.1/foodopediaa/default/download/recepies.image_loc.8481ad433511ffb9.67756c61626a616d756e2e6a706567.jpeg' alt='' style='float:none;margin: 0;width:95px;height:95px;margin-left:2px;border:1px transparent;border-radius:4%'/><input type='radio' name= 'avatar' value = 'image_loc' style='margin-left:-12px;margin-bottom: -78px' /><img src='https://127.0.0.1/foodopediaa/default/download/recepies.image_loc.8481ad433511ffb9.67756c61626a616d756e2e6a706567.jpeg' alt='' style='float:none;margin: 0;width:95px;height:95px;margin-left:2px;border:1px transparent;border-radius:4%'/><input type='radio' name= 'avatar' value = 'image_loc' style='margin-left:-12px;margin-bottom: -78px' /></td></tr>")
+        form[0].insert(-4,my_extra_element)
+    pass
 if request.args(0)=='login':
     if not 'register' in auth.settings.actions_disabled:
         form.add_button(T('Register'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn')

@@ -299,3 +299,40 @@ timestamp: 2013-11-11T22:07:11.832331
 ALTER TABLE recepies ADD all_ingreds VARCHAR(1028);
 timestamp: 2013-11-11T22:09:30.586134
 ALTER TABLE recepies ADD all_ingreds VARCHAR(1028);
+timestamp: 2013-11-15T02:28:57.814129
+ALTER TABLE auth_user ADD profile_pic VARCHAR(512);
+timestamp: 2013-11-15T02:29:35.934506
+ALTER TABLE auth_user ADD profile_pic VARCHAR(512);
+timestamp: 2013-11-15T02:31:39.642991
+ALTER TABLE auth_user ADD profile_pic VARCHAR(512);
+success!
+timestamp: 2013-11-15T02:31:39.894048
+ALTER TABLE auth_user ADD city VARCHAR(512);
+success!
+timestamp: 2013-11-15T02:31:40.178628
+ALTER TABLE auth_user ADD gender VARCHAR(128);
+success!
+timestamp: 2013-11-15T02:31:40.476843
+ALTER TABLE auth_user ADD country VARCHAR(512);
+success!
+success!
+timestamp: 2013-11-15T02:47:44.182279
+ALTER TABLE auth_user ADD gender__tmp VARCHAR(512);
+success!
+UPDATE auth_user SET gender__tmp=gender;
+success!
+ALTER TABLE auth_user DROP COLUMN gender;
+success!
+ALTER TABLE auth_user ADD gender VARCHAR(512);
+success!
+UPDATE auth_user SET gender=gender__tmp;
+success!
+ALTER TABLE auth_user DROP COLUMN gender__tmp;
+success!
+success!
+timestamp: 2013-11-15T03:47:18.464246
+ALTER TABLE auth_user ADD profile_picture VARCHAR(512);
+success!
+timestamp: 2013-11-15T03:47:18.831274
+ALTER TABLE auth_user DROP COLUMN profile_pic;
+success!

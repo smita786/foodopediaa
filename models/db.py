@@ -41,8 +41,14 @@ response.generic_patterns = ['*'] if request.is_local else []
 
 from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
 auth = Auth(db)
+auth.settings.extra_fields['auth_user']= [
+  Field('profile_picture', 'upload',required=False),
+  Field('gender', requires=IS_IN_SET(['Male', 'Female']),widget=SQLFORM.widgets.radio.widget),
+  Field('country','string', length=512,required=False),
+  Field('city','string', length=512,required=False),
+  ]
 crud, service, plugins = Crud(db), Service(), PluginManager()
-
+auth.settings.formstyle = bootstrap
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 

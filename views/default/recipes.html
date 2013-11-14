@@ -1,0 +1,101 @@
+{{left_sidebar_enabled,right_sidebar_enabled=False,True}}
+{{extend 'layout.html'}}
+
+<style type="text/css">
+    .recipe-head{
+        background: none repeat scroll 0 0 white;
+        border: 1px solid #C4CDE0;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px #888888;
+        margin: auto;
+        margin-bottom: 3%;
+        padding: 13px 15px;
+        width: 90%;
+    }
+    .recipe-head a
+{
+    font-size: 18px;
+    line-height: 20px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #3B5998;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 40%;
+}
+#method{
+       background-color: #F5F5F5;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    display: block;
+    margin: 0 0 10px;
+    padding: 9.5px;
+    white-space: pre-wrap;
+    word-break:normal;
+    word-wrap:normal;
+    
+}
+</style>
+{{import json}}
+    <div class="recipe-head">
+         <a href="{{=URL('default','recipes/'+res.slug)}}">{{=res.name}}</a>
+    </div>
+    <ul class="thumbnails">
+    <li class="span4">
+    <a href="#" class="thumbnail">
+    <img src="{{=URL('download',args=res.image_loc)}}" alt="">
+    </a>
+        <h4>Preparation method</h4>
+        <div id="method">{{=XML("".join(res.steps.split("<br>")).replace('\n', '<br/>'),
+                    sanitize=True, permitted_tags=['br/'])}}</div>
+    </li>
+    <li class="span5">
+        <div style="border-bottom:1px solid #ccc;padding-bottom: 2%;min-width: 460px">
+            <div class="rating">
+            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+            </div>&nbsp;&nbsp;288 Ratings | 223 added to favorites
+            <span style="float:right"><i class="icon-heart"></i>
+                <a style="color: #590000" href="#">Add to my favorites</a>
+            </span>
+        </div>
+        <div style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5); padding: 13px;margin-bottom: 1%;margin-top: 1%;display: inline-block;min-width: 95%">
+            <table><tr>
+                <td style="width:25%">
+            <div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=374389969298284";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+                        <div class="fb-like" data-href="{{=URL('default','recipes/'+res.slug,host=True)}}" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false">
+                        </div></td><td style="width:25%">
+                           <a style="width:80px" href="https://twitter.com/share" class="twitter-share-button" data-text="Hey there, wondering what to cook for the day?? give it a try ;-)" data-url="{{=URL('default','recipes/'+res.slug,host=True)}}" data-via="foodopediaa" data-related="foodopediaa" data-hashtags="cooking food"  data-lang="en">Tweet</a>
+                        </td><td style="width:25%">
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
+    <!-- Place this tag where you want the +1 button to render. -->
+					<div style="width:80px" class="g-plusone" data-size="medium" data-href="{{=URL('default','recipes/'+res.slug,host=True)}}"></div>
+					<!-- Place this tag after the last +1 button tag. -->
+					<script type="text/javascript">
+						(function() {
+							var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+							po.src = 'https://apis.google.com/js/plusone.js';
+							var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+						})();
+					</script>
+                                        </td><td style="width:25%">
+                                        <div class="fb-share-button" data-href="{{=URL('default','recipes/'+res.slug,host=True)}}" data-type="button_count"></div>
+                                        </td></tr></table></div>
+        <p>Cooking time approx: <span style="font-weight: bold">{{=res.cooking_time}}</span></p>
+        <p>Make: <span style="font-weight: bold">{{=res.serves}}</span></p>
+        <p><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>
+        <h4>Ingredients</h4>
+        {{for ingreds in json.loads(res.ingredients):}}
+        <p style="line-height: 15px">{{=ingreds[1]}}&nbsp;{{=ingreds[2]}}&nbsp;{{=ingreds[0]}}</p>
+        {{pass}}
+    </li>
+    </ul>
+
+{{pass}}

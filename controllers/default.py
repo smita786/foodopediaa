@@ -92,6 +92,17 @@ def search():
         return dict(primary_res=rows,extra_res=res_extra,query=ingredients)
     return dict()
     
+def recipes():
+    if request.args:
+        slug=request.args[0]
+        query=(
+                          db.recepies.slug.lower().like(slug) 
+            )
+        rows = db(query).select()
+        if rows:
+            return dict(slug=slug,res=rows[0])
+        return dict(slug=slug)
+    return dict()
 def user():
     """
     exposes:
@@ -107,6 +118,8 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
+    db.auth_user.email.widget = lambda f,v: SQLFORM.widgets.string.widget(f, v,
+    _placeholder='Enter your email address')
     return dict(form=auth())
 
 @cache.action()
