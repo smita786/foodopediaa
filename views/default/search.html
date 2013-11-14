@@ -3,7 +3,7 @@
 <style>
 
 .result{
-
+    width: 100%;
 }
 .result-content a
 {
@@ -15,6 +15,9 @@
     cursor: pointer;
     text-decoration: none;
     text-align: left
+}
+.result-image img{
+    max-height: 200px;
 }
 .rating {
   unicode-bidi: bidi-override;
@@ -31,19 +34,74 @@
    content: "\2605";
    position: absolute;
 }
+.sm-size{
+    color: #676767;
+    font-size: 11px;
+    line-height: 16px;
+}
+.line-header
+{
+    border-bottom: 0 none;
+    border-top: 1px solid #333333;
+    padding: 7px 0;
+    overflow: hidden;
+}
 </style>
+<script type="text/javascript">
+    function sortResults()
+    {
+        alert($("#sort-dropdown").val());
+        {{sorted(extra_res,cmp=lambda x,y: cmp(y['cooking_time'],x['cooking_time']))}}        
+    }
+</script>
+<div class="line-header">
+    <p style="float:left">Showing <b>{{=len(primary_res)+len(extra_res)}}</b> Results</p>
+    <div style="float:right">Sort By:
+    <select id="sort-dropdown" name="sortby" onchange="sortResults()">
+                    <option value="relevance">Relevance</option>
+                    <option value="rating">Rating</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="c_time">Cooking time</option>
+    </select>
+    </div>
+</div>
+{{if len(primary_res) >0 :}}
 <h3>Relevant results</h3>
+{{import json}}
+{{pass}}
 {{for res in primary_res:}}
-<div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;margin-bottom: 1%">
+<div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;margin-bottom: 1%;display: inline-block">
 	<div class="result-content" style="width:60%;float: right">
-            <a href="">{{=res.name}}</a>
-            <p><span style="font-weight:bold">Ingredients Required: </span>abc,def,ghi,jkl</p>
-            <p><span style="font-weight:bold">Cooking time: </span>25:25min</p>
+            <a href="">{{=res.name}}</a><br>
             <div class="rating">
             <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+            </div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
+            <br>
+            <p class="sm-size"><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>
+            <p class="sm-size"><span style="font-weight:bold">Ingredients Required: </span>{{=" , ".join(json.loads(res.all_ingreds))}}</p> 
+            <p class="sm-size"><span style="font-weight:bold">Cooking time: </span>{{=res.cooking_time}}</p>
         </div>
+	<div class="result-image" style="width:30%"><img alt="" src="{{=URL('download',args=res.image_loc)}}"></div>
+</div>
+{{pass}}
+{{if len(extra_res) >0 :}}
+<h4>More Results you may like to consider..</h4>
+{{import json}}
+{{pass}}
+{{for res in extra_res:}}
+<div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;margin-bottom: 1%;display: inline-block">
+	<div class="result-content" style="width:60%;float: right">
+            <a href="">{{=res.name}}</a><br>
+            <div class="rating">
+            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+            </div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
+            <br>
+            <p class="sm-size"><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>
+            <p class="sm-size"><span style="font-weight:bold">Ingredients Required: </span>{{=" , ".join(json.loads(res.all_ingreds))}}</p> 
+            <p class="sm-size"><span style="font-weight:bold">Cooking time: </span>{{=res.cooking_time}}</p>
+            <p class="sm-size"><i class="icon-hand-right"></i>&nbsp;&nbsp;You will also need to have <span style="font-weight:bold">{{=" , ".join(list(set(json.loads(res.all_ingreds))-set(query)))}}</span></p>
         </div>
-	<div class="result-image" style="width:30%"><img alt="" src="{{=URL('static','images/slide1.jpg')}}"></div>
+	<div class="result-image" style="width:30%"><img alt="" src="{{=URL('download',args=res.image_loc)}}"></div>
 </div>
 {{pass}}
 {{block right_sidebar}}
@@ -56,5 +114,4 @@
   <li><a href="http://web2py.com/book">{{=T('Documentation')}}</a></li>
 </ul>
 {{end}}
-{{=BEAUTIFY(response._vars)}}
-{{pass}}
+<div id="tmp"></div>

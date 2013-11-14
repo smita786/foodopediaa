@@ -1,6 +1,7 @@
 {{extend 'layout.html'}}
 
 <h2>{{=T( request.args(0).replace('_',' ').capitalize() )}}</h2>
+{{if request.args(0).replace('_',' ') != 'profile' :}}
 <div id="web2py_user_form">
 {{
 if request.args(0)=='login':
@@ -13,7 +14,11 @@ if request.args(0)=='login':
 pass
 =form
 }}
+{{pass}}
 </div>
+{{if request.args(0).replace('_',' ') == 'profile' :}}
+<h3>This is user profile</h3>
+{{pass}}
 <script language="javascript"><!--
 jQuery("#web2py_user_form input:visible:enabled:first").focus();
 {{if request.args(0)=='register':}}

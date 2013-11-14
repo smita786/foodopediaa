@@ -62,7 +62,7 @@ def search():
                               db.recepies.category.lower().like('%'+q+'%')
                 )
         # Then run through each element, and search for that specific word in the test.
-        ingredients=request.vars.ingredients.split(",");
+        ingredients=[x.strip() for x in request.vars.ingredients.split(',')]
         if request.vars.ingredients:
             query=( # Start off with a default query
                           db.recepies.ingredients.lower().like('%'+ingredients[0]+'%') 
@@ -86,9 +86,10 @@ def search():
                     res.append(row)
                 else:
                    res_extra.append(row)
-                   
-            return dict(primary_res=res,extra_res=res_extra)
-        return dict(primary_res=rows,extra_res=res_extra)
+            res_extra.sort(key = lambda row: row.cooking_time)
+            res.sort(key = lambda row: row.cooking_time)
+            return dict(primary_res=res,extra_res=res_extra,query=ingredients)
+        return dict(primary_res=rows,extra_res=res_extra,query=ingredients)
     return dict()
     
 def user():
