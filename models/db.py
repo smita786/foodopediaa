@@ -48,7 +48,7 @@ auth.settings.extra_fields['auth_user']= [
   Field('city','string', length=512,required=False),
   ]
 crud, service, plugins = Crud(db), Service(), PluginManager()
-auth.settings.formstyle = bootstrap
+auth.settings.formstyle='table3cols'
 ## create all tables needed by auth if not custom tables
 auth.define_tables(username=False, signature=False)
 
