@@ -100,7 +100,8 @@
         <h4>Ingredients</h4>
         {{for ingreds in json.loads(res.ingredients):}}
         <p style="line-height: 15px">{{=ingreds[1]}}&nbsp;{{=ingreds[2]}}&nbsp;{{=ingreds[0]}}</p>
-        {{pass}}
+        {{pass}}<br><br>
+        <div class="fb-comments" data-href="{{=URL('default','recipes/'+res.slug,host=True)}}" data-numposts="5"></div>
     </li>
     </ul>
 
