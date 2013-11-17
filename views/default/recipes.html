@@ -1,6 +1,45 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,True}}
 {{extend 'layout.html'}}
-
+<script type='text/javascript'>
+    function rate(value)
+    {
+        {{if rated:}}
+        return false;
+        {{pass}}
+        {{if not auth.is_logged_in():}}
+            $('#loginreg').modal({
+            keyboard: false
+            });
+            $('.rating input').removeAttr("checked");
+            return false
+        {{pass}}
+            $.ajax({
+            type: "POST",
+            url: "{{=URL('default','update_rating',host=True)}}",
+            data: { value: value ,r_id:{{=res.id}}}
+        })
+                .done(function( new_rating ) {
+                    alert(new_rating);
+                    res="";
+                    for(i=0;i<5;i++)
+                    {
+                    if (i < 5-new_rating)
+                        res+="<span>☆</span>";
+                    else
+                        res+="<span class='val'>☆</span>";
+                    }
+                    $( ".rating_small" ).html( res );
+                    $("#rating_count").html(parseInt($("#rating_count").html())+1)
+                    });
+                    $('.rating input').attr("onclick","return false");
+        return false;
+    }
+    $(document).ready(function(){
+        {{if rated>0:}}
+        $('.rating :input[value="{{=rated}}"]').attr("checked","checked");
+        {{pass}}
+    });
+</script>
 <style type="text/css">
     .recipe-head{
         background: none repeat scroll 0 0 white;
@@ -51,9 +90,16 @@
     </li>
     <li class="span5">
         <div style="border-bottom:1px solid #ccc;padding-bottom: 2%;min-width: 460px">
-            <div class="rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-            </div>&nbsp;&nbsp;288 Ratings | 223 added to favorites
+            <div class="rating_small">
+                {{for i in range(5):}}
+                    {{if i < 5-res.avg_rating:}}
+                        <span>☆</span>
+                    {{else:}}
+                    <span class='val'>☆</span>
+                    {{pass}}
+                {{pass}}
+            <!--<span>☆</span><span>☆</span><span class='val'>☆</span><span class='val'>☆</span><span class='val'>☆</span>
+            --></div>&nbsp;&nbsp;<span id='rating_count'>{{=rating_count}}</span> Ratings | 223 added to favorites
             <span style="float:right"><i class="icon-heart"></i>
                 <a style="color: #590000" href="#">Add to my favorites</a>
             </span>
@@ -90,10 +136,26 @@
                                         </td></tr></table>
                                         
         </div>
+        {{if rated>0:}}
+        <p>Your Rating: </p>
+        {{else:}}
         <p>Have you tried this recipe? Rate it now</p>
-        <div class="rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-            </div><br><br>
+        {{pass}}
+        <fieldset class="rating">
+            {{if rated>0:}}
+            <input type="radio" id="star5" name="rating" value="5" onclick='return false' /><label for="star5" title="Rocks!" >5 stars</label>
+            <input type="radio" id="star4" name="rating" value="4" onclick='return false'/><label for="star4" title="Pretty good">4 stars</label>
+            <input type="radio" id="star3" name="rating" value="3" onclick='return false'/><label for="star3" title="Meh">3 stars</label>
+            <input type="radio" id="star2" name="rating" value="2" onclick='return false'/><label for="star2" title="Kinda bad">2 stars</label>
+            <input type="radio" id="star1" name="rating" value="1" onclick='return false'/><label for="star1" title="Sucks big time">1 star</label>
+            {{else:}}
+            <input type="radio" id="star5" name="rating" value="5" onclick='rate(5)'/><label for="star5" title="Rocks!">5 stars</label>
+            <input type="radio" id="star4" name="rating" value="4" onclick='rate(4)'/><label for="star4" title="Pretty good">4 stars</label>
+            <input type="radio" id="star3" name="rating" value="3" onclick='rate(3)'/><label for="star3" title="Meh">3 stars</label>
+            <input type="radio" id="star2" name="rating" value="2" onclick='rate(2)'/><label for="star2" title="Kinda bad">2 stars</label>
+            <input type="radio" id="star1" name="rating" value="1" onclick='rate(1)'/><label for="star1" title="Sucks big time">1 star</label>
+        {{pass}}
+        </fieldset><br><br>
         <p>Cooking time approx: <span style="font-weight: bold">{{=res.cooking_time}}</span></p>
         <p>Make: <span style="font-weight: bold">{{=res.serves}}</span></p>
         <p><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>

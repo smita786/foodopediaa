@@ -27,6 +27,40 @@
  if (res == 'Logged in' || res == 'Email sent') {
      window.top.location.href=window.location.href;
  };
+ function submitFeedback()
+ {
+     var email= $("#inputEmail").val();
+     var feedtext = $("#feedtext").val();
+     if(email == "")
+     {
+         $("#inputEmail").focus();
+         return false;
+     }else if(feedtext == "")
+     {
+         $("#feedtext").focus();
+         return false;
+     }
+     if(!validateEmail(email))
+     {
+         $("#error").show();
+         return false;
+     }
+      $("#error").hide();
+     $.ajax({
+            type: "POST",
+            url: "{{=URL('default','feedback',host=True)}}",
+            data: { email: email ,feedtext:feedtext}
+        });
+     $("#feedtext").val("");
+     $("#inputEmail").val("");
+     $(".collapse").collapse('hide');
+     $('.flash').html("Thanks for your feedback!!");
+     $('.flash').show();
+ }
+ function validateEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+} 
   </script>
   <meta charset="utf-8" />
   <!-- http://dev.w3.org/html5/markup/meta.name.html -->
@@ -84,6 +118,19 @@
  body
 {
     background-image: url("{{=URL('static','images/peach.jpg')}}");
+}
+#feedback {
+   position:fixed;
+   left:70%;
+   bottom:0px;
+   width:30%;
+   background:white;
+}
+
+/* IE 6 */
+* html #feedback {
+   position:absolute;
+   top:expression((0-(feedback.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
 </style>
   <!-- Navbar ================================================== -->
@@ -217,6 +264,32 @@
         </div>
     {{pass}}
 {{if not footer_disabled:}}
+    <div id="feedback" class="accordion-group">
+                  <div class="accordion-heading">
+                    <a style="background:linear-gradient(#95D788, #6CBB6B) repeat scroll 0 0 #6CBB6B;text-decoration: none;text-align: center;color: black;font-weight: bold" href="#collapseThree" data-parent="#accordion2" data-toggle="collapse" class="accordion-toggle collapsed">
+                      Feedback Please?
+                    </a>
+                  </div>
+                  <div class="accordion-body collapse" id="collapseThree" style="height: 0px;">
+                    <div class="accordion-inner">
+                        <p style="color:red;display:none" id="error">Please enter a valid email</p>
+                      <div class="control-group">
+                        <label class="control-label" for="inputEmail">Email</label>
+                        <div class="controls">
+                        <input type="text" id="inputEmail" placeholder="Enter your email">
+                        </div>
+                        </div>
+                         <div class="control-group">
+                            <label class="control-label" for="feedtext">Your Feedback</label>
+                            <div class="controls">
+                                <textarea  id="feedtext" placeholder="Write your feedback/concern if any here..We'll get back to you soon"></textarea>
+                            </div>
+                        </div>
+                        <button style="width:50%;margin-left: 25%" class="btn btn-primary" onclick="submitFeedback()">Submit</button>
+                    </div>
+                  </div>
+                </div>
+   
     <!-- Footer ================================================== -->
     <div class="row">
         <footer class="footer span12" id="footer">

@@ -54,6 +54,7 @@ def approve():
             db(db.recepies.slug == slug1).update(approved=1)
         else:
             raise HTTP(404, "You are not authorized!!") 
+        return 1;
         
 def search():
     if request.vars:
@@ -114,9 +115,38 @@ def recipes():
             )
         rows = db(query).select()
         if rows:
-            return dict(slug=slug,res=rows[0])
-        return dict(slug=slug)
-    return dict()
+            if auth.is_logged_in():
+                rated=db(db.user_ratings.user_id==auth.user.id and db.user_ratings.recipe_id==rows[0].id).select(db.user_ratings.rating)
+            rating_count=db(db.user_ratings.recipe_id==rows[0].id).select(db.user_ratings.id.count())
+            if 'rated' in locals() and rated:
+                rated=rated[0].rating
+            else:
+                rated=0
+            return dict(slug=slug,res=rows[0],rated=rated,rating_count=rating_count[0]['COUNT(user_ratings.id)'])
+        raise HTTP(404, "Page not found!!") 
+    raise HTTP(404, "Page not found!!") 
+
+def update_rating():
+    if request.vars.value:
+        db.user_ratings.insert(user_id=auth.user.id,recipe_id=request.vars.r_id,rating=request.vars.value)
+        rows=db(db.user_ratings.recipe_id == request.vars.r_id).select(db.user_ratings.rating.sum(),db.user_ratings.rating.count())
+        logger.info(rows)
+        for row in rows:
+            avg_rating=int(round(row['SUM(user_ratings.rating)']/float(row['COUNT(user_ratings.rating)'])))
+            db(db.recepies.id==request.vars.r_id).update(avg_rating=avg_rating)
+        logger.info("update rating func")
+        return avg_rating
+    raise HTTP(404, "Page not found!!") 
+
+def feedback():
+    if request.vars.email:
+        mail.send(admin_email[0],
+            '[Feedback] feedback from '+request.vars.email,
+            '<html>'+request.vars.feedtext.replace('\n', '<br/>')+'</html>',
+            cc=admin_email
+            )
+        return 1
+    raise HTTP(404, "Page not found!!") 
 def user():
     """
     exposes:

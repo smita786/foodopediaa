@@ -59,9 +59,16 @@
 <div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;margin-bottom: 1%;display: inline-block">
 	<div class="result-content" style="width:60%;float: right">
             <a href="{{=URL('default','recipes/'+res.slug)}}">{{=res.name}}</a><br>
-            <div class="rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-            </div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
+            <div class="rating_small">
+                 {{for i in range(5):}}
+                    {{if i < 5-res.avg_rating:}}
+                        <span>☆</span>
+                    {{else:}}
+                    <span class='val'>☆</span>
+                    {{pass}}
+                {{pass}}
+            <!--<span>☆</span><span>☆</span><span class='val'>☆</span><span class='val'>☆</span><span class='val'>☆</span>
+            --></div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
             <br>
             <p class="sm-size"><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>
             <p class="sm-size"><span style="font-weight:bold">Ingredients Required: </span>{{=" , ".join(json.loads(res.all_ingreds))}}</p> 
@@ -78,9 +85,16 @@
 <div class="result" style="background: #e7ebf3; border: 1px solid #c4cde0; padding: 13px 15px;margin-bottom: 1%;display: inline-block">
 	<div class="result-content" style="width:60%;float: right">
             <a href="{{=URL('default','recipes/'+res.slug)}}">{{=res.name}}</a><br>
-            <div class="rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-            </div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
+            <div class="rating_small">
+                 {{for i in range(5):}}
+                    {{if i < 5-res.avg_rating:}}
+                        <span>☆</span>
+                    {{else:}}
+                    <span class='val'>☆</span>
+                    {{pass}}
+                {{pass}}
+            <!--<span>☆</span><span>☆</span><span class='val'>☆</span><span class='val'>☆</span><span class='val'>☆</span>
+            --></div>&nbsp;&nbsp;<span>{{if not isinstance(json.loads(res.category), basestring):}}{{=" . ".join(json.loads(res.category))}}{{else:}}{{=json.loads(res.category)}}{{pass}}</span>
             <br>
             <p class="sm-size"><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>
             <p class="sm-size"><span style="font-weight:bold">Ingredients Required: </span>{{=" , ".join(json.loads(res.all_ingreds))}}</p> 
