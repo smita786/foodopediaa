@@ -31,7 +31,7 @@
      Slug:
      <input type="text" name="slug" required><br>
      Image: <input type="file" name="pic" accept="image/*" required><br>
-     Description: <textarea name="description" required></textarea><br>
+     Description: <textarea name="description" required style="height: 100px;width: 80%"></textarea><br>
      Serving size:
       <input type="text" name="serves" required><br>
       <div id="ingreds">Ingredients<br>
@@ -77,7 +77,7 @@
      <font onclick="newIngred()" style="color:blue;cursor: pointer">+add more</font><br>
      Cooking Time:
      <input type="text" name="c_time" required><br>
-     Steps of Cooking:<br><textarea name="steps" required></textarea>
+     Steps of Cooking:<br><textarea name="steps" required style="height: 100px;width: 80%"></textarea>
      <input type="submit" value="Add Recipe">
  </form>
 {{=BEAUTIFY(response._vars)}}

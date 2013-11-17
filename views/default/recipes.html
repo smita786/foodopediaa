@@ -87,7 +87,13 @@
 					</script>
                                         </td><td style="width:25%">
                                         <div class="fb-share-button" data-href="{{=URL('default','recipes/'+res.slug,host=True)}}" data-type="button_count"></div>
-                                        </td></tr></table></div>
+                                        </td></tr></table>
+                                        
+        </div>
+        <p>Have you tried this recipe? Rate it now</p>
+        <div class="rating">
+            <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+            </div><br><br>
         <p>Cooking time approx: <span style="font-weight: bold">{{=res.cooking_time}}</span></p>
         <p>Make: <span style="font-weight: bold">{{=res.serves}}</span></p>
         <p><i class="icon-info-sign"></i>&nbsp;&nbsp{{=res.description}}</p>

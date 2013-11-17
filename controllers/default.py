@@ -19,12 +19,13 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Welcome to web2py!")
+    #response.flash = T("Welcome to web2py!")
     h=sayhello()
     return dict(message=h)
 
 def sayhello():
     return "Hello There!!";
+@auth.requires_login()
 def add_recipe():
     if request.vars:
         response.flash = T("Successfully Added!!")
@@ -36,11 +37,24 @@ def add_recipe():
         all_ingreds=json.dumps(request.vars.ingredients)
         #filename=request.vars.pic
         image = db.recepies.image_loc.store(request.vars.pic.file, request.vars.pic.filename)
-        db.recepies.insert(category=json.dumps(request.vars.category),name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image,all_ingreds=all_ingreds)
-        #db.mytable.insert(myfield=request.vars.category)
-        #return encoded_ingreds
+        db.recepies.insert(category=json.dumps(request.vars.category),name=request.vars.name,slug=request.vars.slug,description=request.vars.description,cooking_time=request.vars.c_time,serves=request.vars.serves,steps=request.vars.steps,ingredients=encoded_ingreds,image_loc=image,all_ingreds=all_ingreds,added_by=auth.user.id,approved=0)
+        mail.send(admin_email[0],
+            '[Approve] New recipe added',
+            '<html>New recipe has been added by <b>'+auth.user.email+'</b>, Details are as follows<br>\
+            <b>name</b>:'+request.vars.name+'<br><b>Description:</b>'+request.vars.description+'<br><b>Ingredients:</b>'+" , ".join(request.vars.ingredients)+'<br><b>Cooking method:</b>'+request.vars.steps+'<br><b>Image Url:</b><a href="'+URL('download',args=image,host=True)+'">'+URL('download',args=image,host=True)+'</a><br>\
+            <br>Click this link <a href="'+URL('default',"approve/"+request.vars.slug,host=True)+'">'+URL('default',"approve/"+request.vars.slug,host=True)+'</a> to approve<br><br>Regards<br>Team foodopedia</html>',
+            cc=admin_email
+            )
     return dict()
-    
+def approve():
+    if request.args:
+        slug1=request.args[0]
+        #logger.info(slug1)
+        if auth.user.email in admin_email:
+            db(db.recepies.slug == slug1).update(approved=1)
+        else:
+            raise HTTP(404, "You are not authorized!!") 
+        
 def search():
     if request.vars:
         res=[]
@@ -90,7 +104,7 @@ def search():
             res.sort(key = lambda row: row.cooking_time)
             return dict(primary_res=res,extra_res=res_extra,query=ingredients)
         return dict(primary_res=rows,extra_res=res_extra,query=ingredients)
-    return dict()
+    redirect(URL('default','index'))
     
 def recipes():
     if request.args:
@@ -120,8 +134,10 @@ def user():
     """
     db.auth_user.email.widget = lambda f,v: SQLFORM.widgets.string.widget(f, v,
     _placeholder='Enter your email address')
-    return dict(form=auth())
-
+    if request.vars.signin:
+        return dict(form=auth(),signin=True)
+    return dict(form=auth(),signin=False)
+        
 @cache.action()
 def download():
     """

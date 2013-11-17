@@ -98,10 +98,6 @@ a.more {
         border: 1px;
         border-radius: 1%;
     }
-#myCarousel img
-    {
-        height: 400px;
-    }
     
     .imag{
         bottom:0;
@@ -112,12 +108,6 @@ a.more {
         height:100%;
     }
     
-    .carousel-control.right{
-        right:173px;
-    } 
-    .carousel-caption{
-        width:72.5%;
-    }
     #explore{
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
     border-radius: 10px;
@@ -165,3 +155,71 @@ a.more {
    content: "\2605";
    position: absolute;
 }
+#searchbox
+{
+    margin-top: 3px;
+    overflow: hidden; /* Clear floats */
+	
+}
+#search, #submit
+{
+	float: left;
+}
+#search
+{
+        
+	height: 30px;
+	width: 61%;
+	border: 1px solid #a4c3ca;
+        padding-left:5%;
+	background: #f1f1f1;
+	
+	
+	 -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+	 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+	 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+        background-image:url('http://i47.tinypic.com/r02vbq.png');
+background-repeat:no-repeat;
+background-position:left;outline:0;
+}
+#submit
+{		
+	background: #6cbb6b;
+	background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+	border-width: 1px;
+	border-style: solid;
+	border-color: #7eba7c #578e57 #447d43;
+	
+	 -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+	 -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+	 box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;   		
+
+	height: 42px;
+	margin: 0 0 0 -3px;
+        
+	width: 11%;
+	cursor: pointer;
+	font: bold 14px Arial, Helvetica;
+	color: #23441e;
+	
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+#submit:hover
+{		
+	background: #95d788;
+	background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
+}	
+
+#submit:active
+{		
+	background: #95d788;
+	outline: none;
+   
+	 -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+	 -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+	 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
+}
+
+

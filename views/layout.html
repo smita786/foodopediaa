@@ -15,83 +15,20 @@
   <!-- Always force latest IE rendering engine
        (even in intranet) & Chrome Frame
        Remove this if you use the .htaccess -->
-	   
+  <script type="text/javascript">
+      function registerModal()
+      {
+         // $("#loginreg .modal-body").load("https://127.0.0.1/foodopediaa/default/user/register?_next=/foodopediaa/default/index");
+          $('#loginreg').modal({
+            keyboard: false
+            });
+      }
+ var res = '{{=response.flash}}';
+ if (res == 'Logged in' || res == 'Email sent') {
+     window.top.location.href=window.location.href;
+ };
+  </script>
   <meta charset="utf-8" />
-<style>
-#searchbox
-{
-    margin-top: 3px;
-    overflow: hidden; /* Clear floats */
-	
-}
-#search, #submit
-{
-	float: left;
-}
-#search
-{
-        
-	height: 30px;
-	width: 61%;
-	border: 1px solid #a4c3ca;
-        padding-left:5%;
-	background: #f1f1f1;
-	
-	
-	 -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-	 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-	 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-        background-image:url('http://i47.tinypic.com/r02vbq.png');
-background-repeat:no-repeat;
-background-position:left;outline:0;
-}
-#submit
-{		
-	background: #6cbb6b;
-	background-image: -moz-linear-gradient(#95d788, #6cbb6b);
-	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
-	border-width: 1px;
-	border-style: solid;
-	border-color: #7eba7c #578e57 #447d43;
-	
-	 -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-	 -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
-	 box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;   		
-
-	height: 42px;
-	margin: 0 0 0 -3px;
-        
-	width: 11%;
-	cursor: pointer;
-	font: bold 14px Arial, Helvetica;
-	color: #23441e;
-	
-	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-}
-#submit:hover
-{		
-	background: #95d788;
-	background-image: -moz-linear-gradient(#6cbb6b, #95d788);
-	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
-}	
-
-#submit:active
-{		
-	background: #95d788;
-	outline: none;
-   
-	 -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	 -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-	 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;		
-}
-
-body
-{
-    background-image: url("{{=URL('static','images/peach.jpg')}}");
-}
-
-
-</style>
   <!-- http://dev.w3.org/html5/markup/meta.name.html -->
   <meta name="application-name" content="{{=request.application}}" />
 
@@ -128,6 +65,7 @@ body
   # using sidebars need to know what sidebar you want to use
   left_sidebar_enabled = globals().get('left_sidebar_enabled',False)
   right_sidebar_enabled = globals().get('right_sidebar_enabled',False)
+  footer_disabled=globals().get('footer_disabled',False)
   middle_columns = {0:'span12',1:'span9',2:'span6'}[
     (left_sidebar_enabled and 1 or 0)+(right_sidebar_enabled and 1 or 0)]
   }}
@@ -141,6 +79,13 @@ body
 </head>
 
 <body>
+    {{if not footer_disabled:}}
+<style>
+ body
+{
+    background-image: url("{{=URL('static','images/peach.jpg')}}");
+}
+</style>
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
     <div class="flash">{{=response.flash or ''}}</div>
@@ -154,7 +99,30 @@ body
           <span class="icon-bar"></span>
         </button>
         {{=response.logo or ''}}
-        <ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>
+        <ul class="nav pull-right" id="navbar">
+            <li class="dropdown">
+                {{if not auth.is_logged_in():}}
+                <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                <ul class="dropdown-menu" style="display: none;">
+                    <li onclick="$('#myTab li').removeClass('active');$('#myTab li:first').addClass('active');$('#myTabContent div').removeClass('active in');$('#myTabContent div:first').addClass('active in')"><a rel="nofollow" href="#loginreg" data-toggle="modal" data-w2p_disable_with="default"><i class="icon-user"></i> Register</a></li>
+                    <li onclick="$('#myTab li').removeClass('active');$('#myTab li:last').addClass('active');$('#myTabContent div').removeClass('active in');$('#myTabContent div:last').addClass('active in')"><a rel="nofollow" href="#loginreg" data-toggle="modal" data-w2p_disable_with="default"><i class="icon-lock"></i> Lost password?</a></li>
+                    <li class="divider"></li>
+                    <li onclick="$('#myTab li').removeClass('active');$('#myTab #log').addClass('active');$('#myTabContent div').removeClass('active in');$('#myTabContent #login').addClass('active in')"><a rel="nofollow" href="#loginreg" data-toggle="modal" data-w2p_disable_with="default"><i class="icon-off"></i> Login</a>
+                    </li>
+                </ul>
+                {{else: }}
+                    <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown">Welcome {{=auth.user.first_name}}</a>
+                    <ul class="dropdown-menu" style="display: none;">
+                        <li><a rel="nofollow" href="/foodopediaa/default/user/profile" data-w2p_disable_with="default"><i class="icon-user"></i> Profile</a></li>
+                        <li><a rel="nofollow" href="/foodopediaa/default/user/change_password?_next=/foodopediaa/default/index" data-w2p_disable_with="default"><i class="icon-lock"></i> Password</a></li>
+                        <li class="divider"></li><li><a rel="nofollow" href="/foodopediaa/default/user/logout?_next=/foodopediaa/default/index" data-w2p_disable_with="default"><i class="icon-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                {{pass}}
+            </li>
+        </ul>
+        
+        <!--<ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>-->
         <div class="{{='nav-collapse' if is_mobile else 'nav'}}">
           {{if response.menu:}}
           <a href="{{=URL('default','index')}}">HOME</a>
@@ -198,7 +166,7 @@ body
 
     </div>
   </div><!--/top navbar -->
-
+{{pass}}
   <div class="container">
     <!-- Masthead ================================================== -->
    <!-- <header class="mastheader row" id="header">
@@ -214,7 +182,7 @@ body
 	{{pass}}
     </header> -->
 
-
+{{ if not footer_disabled:}}
     <section id="main" class="main row">
         {{if left_sidebar_enabled:}}
         <div class="span3 left-sidebar">
@@ -231,7 +199,7 @@ body
             {{end}}
         </div>
 
-        {{if right_sidebar_enabled:}}
+        {{ if right_sidebar_enabled:}}
         <div class="span3">
             {{block right_sidebar}}
             <h3>Right Sidebar</h3>
@@ -239,8 +207,16 @@ body
             {{end}}
         </div>
         {{pass}}
-    </section><!--/main-->
-
+        </section><!--/main-->  
+        {{pass}}
+    {{ if footer_disabled:}}
+        <div class="{{=middle_columns}}">
+            {{block center}}
+            {{include}}
+            {{end}}
+        </div>
+    {{pass}}
+{{if not footer_disabled:}}
     <!-- Footer ================================================== -->
     <div class="row">
         <footer class="footer span12" id="footer">
@@ -255,9 +231,40 @@ body
             </div>
         </footer>
     </div>
-
+{{block reg}}
+<div id="loginreg" style="width:80%;left:33%" class="modal hide fade" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header" style="height:47px">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<ul class="nav nav-tabs" id="myTab">
+              <li class=""><a data-toggle="tab" href="#register">Register</a></li>
+              <li id="log" class="active"><a data-toggle="tab" href="#login">Login</a></li>
+              <li class=""><a data-toggle="tab" href="#password">Forgot Password</a></li>
+</ul>
+</div>		
+   <div class="modal-body" style="max-height:500px"> 
+            <div class="tab-content" id="myTabContent">
+              <div id="register" class="tab-pane fade">
+                <iframe src="{{=URL('default', 'user/register',host=True)}}?_next={{=URL(args=request.args, vars=request.vars, host=True)}}&signin=1" frameborder="0" id="modal-frame" style="overflow-x: hidden;overflow-y: scroll;width:65%; height:500px">
+        </iframe>
+        <div class="social-dialog" style="width:30%;float: right">
+                Login with Facebook
+        </div>
+         </div>
+              <div id="login" class="tab-pane fade active in">
+                <iframe src="{{=URL('default', 'user/login',host=True)}}?_next={{=URL(args=request.args, vars=request.vars, host=True)}}&signin=1" frameborder="0" id="modal-frame" style="overflow-x: hidden;overflow-y: scroll;width:65%; height:500px">
+        </iframe></div>
+              <div id="password" class="tab-pane fade">
+                <iframe src="{{=URL('default', 'user/request_reset_password',host=True)}}?_next={{=URL(args=request.args, vars=request.vars, host=True)}}&signin=1" frameborder="0" id="modal-frame" style="overflow-x: hidden;overflow-y: scroll;width:65%; height:500px">
+        </iframe></div>
+            </div>
+         
+       <!-- <iframe src="https://127.0.0.1/foodopediaa/default/user/register?_next=/foodopediaa/default/index" frameborder="0" id="modal-frame" style="overflow-x: hidden;overflow-y: scroll;width:100%; height:500px">
+        </iframe>-->
+   </div>
   </div> <!-- /container -->
-
+  
+{{end}}
+{{pass}}
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->
   <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
@@ -266,7 +273,7 @@ body
       <script src="{{=URL('static','js/dd_belatedpng.js')}}"></script>
       <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
       <![endif]-->
-  
+
   {{if response.google_analytics_id:}}
   <script src="{{=URL('static','js/analytics.min.js')}}"></script>
   <script type="text/javascript">
@@ -274,6 +281,6 @@ body
     'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'} 
   });</script>
   {{pass}}
-  <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>
+  <!--<script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>-->
 </body>
 </html>

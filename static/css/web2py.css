@@ -35,7 +35,7 @@ audio {width:200px}
 }
 .hidden {display:none;visibility:visible}
 .right {float:right;}
-.left {float:left}
+/*.left {float:left}*/
 .center {width:100; text-align:center; vertical-align:middle}
 /** end **/
 

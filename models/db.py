@@ -54,15 +54,15 @@ auth.define_tables(username=False, signature=False)
 
 ## configure email
 mail = auth.settings.mailer
-mail.settings.server = 'logging' or 'smtp.gmail.com:587'
-mail.settings.sender = 'you@gmail.com'
-mail.settings.login = 'username:password'
+mail.settings.server = 'smtp.gmail.com:587' 
+mail.settings.sender = 'kumarismita62@gmail.com'
+mail.settings.login = 'kumarismita62@gmail.com:***'
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
-
+admin_email=['smita.kumari@students.iiit.ac.in','priyanka.rani@students.iiit.ac.in','kumarismita62@gmail.com']
 ## if you need to use OpenID, Facebook, MySpace, Twitter, Linkedin, etc.
 ## register with janrain.com, write your domain:api_key in private/janrain.key
 from gluon.contrib.login_methods.rpx_account import use_janrain
@@ -78,6 +78,8 @@ db.define_table('recepies',
                 db.Field('cooking_time', 'string', length=128,required=True),
                 db.Field('steps', 'text',required=True),
                 db.Field('all_ingreds','string',length=1028,required=False),
+                db.Field('added_by','integer',requires=False),
+                db.Field('approved','boolean',requires=False),
                 migrate=False
                 )
 #########################################################################
