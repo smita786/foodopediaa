@@ -20,8 +20,9 @@ def index():
     return auth.wiki()
     """
     #response.flash = T("Welcome to web2py!")
+    rows=db(db.recepies.id>0).select(limitby=(0,5),orderby=~db.recepies.avg_rating)
     h=sayhello()
-    return dict(message=h)
+    return dict(message=h,slides=rows)
 
 def sayhello():
     return "Hello There!!";
