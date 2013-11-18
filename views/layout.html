@@ -167,7 +167,7 @@
                     </li>
                 </ul>
                 {{else: }}
-                    <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown" style="color: #ADD8E6;max-width: 100px">Welcome {{=auth.user.first_name}}</a>
+                    <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown" style="color: #ADD8E6;max-width: 150px">Welcome {{=auth.user.first_name}}</a>
                     <ul class="dropdown-menu" style="display: none;">
                         <li><a rel="nofollow" href="/foodopediaa/default/user/profile" data-w2p_disable_with="default"><i class="icon-user"></i> Profile</a></li>
                         <li><a rel="nofollow" href="/foodopediaa/default/user/change_password?_next=/foodopediaa/default/index" data-w2p_disable_with="default"><i class="icon-lock"></i> Password</a></li>
@@ -193,7 +193,7 @@
           <label style="margin-top:0.5%;">Type recipe name or comma separated list of ingredients below</label>
          <div class="control-group">
  <input id="search" name="ingredients" type="text" placeholder="Search for whatever you want to cook">
- 
+    <input id="sorting" type="hidden" name="sort_by" value="cooking_time"/>
     <input id="submit" type="submit" value="Search">
          </div>
     </fieldset>
@@ -212,8 +212,7 @@
         <input type="checkbox" name="category"  value="snacks"> Snacks
     </label>
     <label class="checkbox inline">
-        
-
+        <input type="checkbox" name="category"  value="drink"> Drinks
     </label>
          </div>    
     </fieldset>
@@ -288,7 +287,11 @@
                       <div class="control-group">
                         <label class="control-label" for="inputEmail">Email</label>
                         <div class="controls">
-                        <input type="text" id="inputEmail" placeholder="Enter your email">
+                            {{if auth.is_logged_in():}}
+                                <input type="text" id="inputEmail" placeholder="Enter your email" value="{{=auth.user.email}}" readonly>
+                             {{else:}}
+                                <input type="text" id="inputEmail" placeholder="Enter your email">
+                             {{pass}}
                         </div>
                         </div>
                          <div class="control-group">

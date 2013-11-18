@@ -94,8 +94,17 @@ def search():
                 query=query1&query
             else:
                 query=query1
-        
-        rows = db(query).select()
+        if request.vars.sort_by:
+            if request.vars.sort_by=='cooking_time':
+                rows = db(query).select(orderby=db.recepies.cooking_time)
+            elif request.vars.sort_by=='rating':
+                rows = db(query).select(orderby=~db.recepies.avg_rating)
+            elif request.vars.sort_by=='popularity':
+                rows = db(query).select(orderby=~db.recepies.fav_count)
+            else:
+                rows = db(query).select()
+        else:
+            rows = db(query).select()
        # logger.info(rows)
         if request.vars.ingredients:
             for row in rows:
@@ -107,8 +116,8 @@ def search():
                    res_extra.append(row)
             res_extra.sort(key = lambda row: row.cooking_time)
             res.sort(key = lambda row: row.cooking_time)
-            return dict(primary_res=res,extra_res=res_extra,query=ingredients)
-        return dict(primary_res=rows,extra_res=res_extra,query=ingredients)
+            return dict(primary_res=res,extra_res=res_extra,query=ingredients,cat=q)
+        return dict(primary_res=rows,extra_res=res_extra,query=ingredients,cat=q)
     redirect(URL('default','index'))
     
 def recipes():

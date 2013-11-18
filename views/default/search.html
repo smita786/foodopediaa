@@ -36,18 +36,32 @@
 <script type="text/javascript">
     function sortResults()
     {
-        alert($("#sort-dropdown").val());
-        {{sorted(extra_res,cmp=lambda x,y: cmp(y['cooking_time'],x['cooking_time']))}}        
+       // alert($("#sort-dropdown").val());
+        $("#sorting").val($("#sort-dropdown").val());
+        $("#submit").click();
     }
+    $(document).ready(function(){
+        $("#search").val('{{=",".join(query)}}');
+        {{if cat:}}
+        {{if not isinstance(cat, basestring):}}
+        {{for c in cat:}}
+        $('#searchbox :input[value="{{=c}}"]').attr("checked","checked");
+        {{pass}}
+        {{else:}}
+        $('#searchbox :input[value="{{=cat}}"]').attr("checked","checked");
+        {{pass}}
+        {{pass}}
+        $('#sort-dropdown option[value="{{=request.vars.sort_by}}"]').attr("selected","selected");
+       // $('#sort-dropdown :input[value="{{=request.vars.sort_by}}"]').attr("selected","selected");
+    })
 </script>
 <div class="line-header">
     <p style="float:left">Showing <b>{{=len(primary_res)+len(extra_res)}}</b> Results</p>
     <div style="float:right">Sort By:
     <select id="sort-dropdown" name="sortby" onchange="sortResults()">
-                    <option value="relevance">Relevance</option>
+                    <option value="cooking_time">Cooking Time</option>
                     <option value="rating">Rating</option>
                     <option value="popularity">Popularity</option>
-                    <option value="c_time">Cooking time</option>
     </select>
     </div>
 </div>
@@ -104,14 +118,4 @@
 	<div class="result-image" style="width:30%"><img alt="" src="{{=URL('download',args=res.image_loc)}}"></div>
 </div>
 {{pass}}
-{{block right_sidebar}}
-{{=A(T("Administrative Interface"), _href=URL('admin','default','index'), _class='btn',
-     _style='margin-top: 1em;')}}
-<h6>{{=T("Don't know what to do?")}}</h6>
-<ul>
-  <li>{{=A(T("Online examples"), _href=URL('examples','default','index'))}}</li>
-  <li><a href="http://web2py.com">web2py.com</a></li>
-  <li><a href="http://web2py.com/book">{{=T('Documentation')}}</a></li>
-</ul>
-{{end}}
 <div id="tmp"></div>
