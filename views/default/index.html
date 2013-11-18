@@ -1,5 +1,17 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,True}}
 {{extend 'layout.html'}}
+<script type="text/javascript">
+    
+        
+        {{
+                import random
+                num=str(random.randint(1,5))
+        }}
+        $('body').css('background-image',"url({{=URL('static','images/'+num+'.jpg',host=True)}})");
+        //document.body.background-image:url("{{=URL('static','images/'+num+'.jpg')}}");
+        //$('body').css('backgroundRepeat',"repeat");// Background repeat
+   // }
+</script>
 <div style="width:60%;float: left">
     <div class="carousel slide" id="myCarousel" style="">
                 <div class="carousel-inner">
@@ -36,26 +48,26 @@
     <div style="clear: both"></div>
 <script src="//www.gmodules.com/ig/ifr?url=http://feeds.cookinglight.com/CookingLight/Food&amp;synd=open&amp;w=326&amp;h=369&amp;title=All+about+cooking&amp;border=http%3A%2F%2Fwww.gmodules.com%2Fig%2Fimages%2F&amp;output=js"></script>
 <div id="explore" style="">
-<h4 class="hubtitle">Explore Recipes...</h4>
+    <h4 class="hubtitle" style="color:whitesmoke;">Explore Recipes...</h4>
 <div class="clearfix"></div>
 <div class="showcase-cntnr">
         <ul class="cat-cntnr">
         <li>
-        <a href="#"><img alt="Breakfast" src="{{=URL('static','images/breakfast_image.jpg')}}"></a>
-        <span><a href="#">Breakfast</a></span>
+        <a href="/foodopediaa/default/search?ingredients=&category=breakfast"><img alt="Breakfast" src="{{=URL('static','images/breakfast_image.jpg')}}"></a>
+        <span><a href="/foodopediaa/default/search?ingredients=&category=breakfast">Breakfast</a></span>
         </li>
         <li>
-        <a href="#"><img alt="lunch" src="{{=URL('static','images/lunch_image.jpg')}}"></a>
-        <span><a href="#">Lunch</a></span></li>
+        <a href="/foodopediaa/default/search?ingredients=&category=breakfast"><img alt="lunch" src="{{=URL('static','images/lunch_image.jpg')}}"></a>
+        <span><a href="/foodopediaa/default/search?ingredients=&category=lunch">Lunch</a></span></li>
         <li>
-        <a href="#"><img alt="snacksr" src="{{=URL('static','images/snack_image.jpg')}}"></a>
-        <span><a href="#">Snacks</a></span></li>
+        <a href="/foodopediaa/default/search?ingredients=&category=breakfast"><img alt="snacksr" src="{{=URL('static','images/snack_image.jpg')}}"></a>
+        <span><a href="/foodopediaa/default/search?ingredients=&category=snacks">Snacks</a></span></li>
         <li>
-        <a href="#"><img alt="dinner" src="{{=URL('static','images/dinner_image.jpg')}}"></a>
-        <span><a href="#">Dinner</a></span></li>
+        <a href="/foodopediaa/default/search?ingredients=&category=breakfast"><img alt="dinner" src="{{=URL('static','images/dinner_image.jpg')}}"></a>
+        <span><a href="/foodopediaa/default/search?ingredients=&category=dinner">Dinner</a></span></li>
         <li>
-        <a href="#"><img alt="dessert" src="{{=URL('static','images/dessert_image.jpg')}}"></a>
-        <span><a href="#">Dessert</a></span></li>
+        <a href="/foodopediaa/default/search?ingredients=&category=breakfast"><img alt="dessert" src="{{=URL('static','images/dessert_image.jpg')}}"></a>
+        <span><a href="/foodopediaa/default/search?ingredients=&category=breakfast">Dessert</a></span></li>
         
         </ul>   
 </div>
@@ -63,7 +75,7 @@
 </div>
 <!-- <div class="clearfix"></div> -->
 <div id="explore_new" style="">
-<h4 class="hubtitle_new">Cooking with...</h4>
+<h4 class="hubtitle_new" style="color:whitesmoke;">Cooking with...</h4>
 <div class="clearfix"></div>
 <div class="showcase-cntnr">
         <ul class="cat-cntnr">

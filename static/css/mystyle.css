@@ -220,7 +220,9 @@ a.more {
 }
 #searchbox
 {
-    margin-top: 3px;
+    margin-left: 0;
+    margin-top:0;
+    width:60%;
     overflow: hidden; /* Clear floats */
 	
 }
@@ -232,9 +234,9 @@ a.more {
 {
         
 	height: 30px;
-	width: 61%;
+	width: 68%;
 	border: 1px solid #a4c3ca;
-        padding-left:5%;
+        padding-left:7%;
 	background: #f1f1f1;
 	
 	

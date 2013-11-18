@@ -132,6 +132,7 @@
    position:absolute;
    top:expression((0-(feedback.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
 }
+
 </style>
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
@@ -146,7 +147,7 @@
           <span class="icon-bar"></span>
         </button>
         {{=response.logo or ''}}
-        <ul class="nav pull-right" id="navbar">
+        <ul class="nav pull-right" id="navbar" style="margin-top: 2.4%; margin-right:0;">
             <li class="dropdown">
                 {{if not auth.is_logged_in():}}
                 <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown">Login</a>
@@ -170,24 +171,26 @@
         </ul>
         
         <!--<ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>-->
-        <div class="{{='nav-collapse' if is_mobile else 'nav'}}">
+        <div style="margin-right:2%; margin-top:3.2%; float:right; margin-left:0;" class="{{='nav-collapse' if is_mobile else 'nav'}}">
           {{if response.menu:}}
           <a href="{{=URL('default','index')}}">HOME</a>
           {{pass}}
         </div><!--/.nav-collapse -->
-      
+       <div  class="nav" style="margin-right:4%; margin-top:3.2%; float:right; margin-left:0;">
+          <a href="/foodopediaa/default/user/login?_next=/foodopediaa/default/add_recipe">Add Recipe</a>
+        </div>
 
         <form id="searchbox" action="/{{=request.application}}/default/search" onsubmit="alert(1);">
-     <fieldset id="f1">
-          <label>Enter whatevere ehatever</label>
+     <fieldset id="f1" style="margin-left:3%; padding:0;width:96%; ">
+          <label style="margin-top:0.5%;">Type recipe name or comma separated list of ingredients below</label>
          <div class="control-group">
- <input id="search" name="ingredients" type="text" placeholder="Search for the recipe">
+ <input id="search" name="ingredients" type="text" placeholder="Search for whatever you want to cook">
  
     <input id="submit" type="submit" value="Search">
          </div>
     </fieldset>
-    <fieldset id="f2">
-         <div class="control-group">
+    <fieldset id="f2" style="margin-left:3%; padding:0;" >
+         <div class="control-group" style="margin-bottom:0; padding:0;">
     <label class="checkbox inline">
         <input type="checkbox" name="category" value="breakfast"> Breakfast
     </label>
@@ -201,14 +204,15 @@
         <input type="checkbox" name="category"  value="snacks"> Snacks
     </label>
     <label class="checkbox inline">
-        <input type="checkbox" name="category" value="drink"> Drinks
-        <a href="#">Advanced Options<i class=" icon-circle-arrow-right"></i></a>
+        
 
     </label>
          </div>    
     </fieldset>
+            
      
 </form>
+         
 </div>
 
     </div>
