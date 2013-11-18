@@ -55,8 +55,8 @@ auth.define_tables(username=False, signature=False)
 ## configure email
 mail = auth.settings.mailer
 mail.settings.server = 'smtp.gmail.com:587' 
-mail.settings.sender = 'kumarismita62@gmail.com'
-mail.settings.login = 'kumarismita62@gmail.com:***'
+mail.settings.sender = 'foodopediaac@gmail.com'
+mail.settings.login = 'foodopediaac@gmail.com:psiloveyou'
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
@@ -81,6 +81,7 @@ db.define_table('recepies',
                 db.Field('added_by','integer',required=False),
                 db.Field('approved','boolean',required=False),
                 db.Field('avg_rating','integer',required=False,default=0),
+                db.Field('fav_count','integer',required=False,default=0),
                 migrate=False
                 )
 db.define_table('user_ratings',
@@ -88,6 +89,12 @@ db.define_table('user_ratings',
                 db.Field('user_id','integer',required=True),
                 db.Field('recipe_id','integer',required=True),
                 db.Field('rating','integer',required=True,default=0),
+                migrate=False
+                )
+db.define_table('user_favs',
+                db.Field('id', 'integer'),
+                db.Field('user_id','integer',required=True),
+                db.Field('fav_list','text',required=True),
                 migrate=False
                 )
 #########################################################################

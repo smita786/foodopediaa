@@ -27,6 +27,7 @@
  if (res == 'Logged in' || res == 'Email sent') {
      window.top.location.href=window.location.href;
  };
+
  function submitFeedback()
  {
      var email= $("#inputEmail").val();
@@ -117,7 +118,7 @@
 <style>
  body
 {
-    background-image: url("{{=URL('static','images/peach.jpg')}}");
+    /*background-image: url("{{=URL('static','images/peach.jpg')}}");*/
 }
 #search{
      background-image: url("{{=URL('static','images/search.png')}}");
@@ -140,7 +141,7 @@
   <!-- Navbar ================================================== -->
   <div class="navbar navbar-inverse">
     <div class="flash">{{=response.flash or ''}}</div>
-    <div class="navbar-inner">
+    <div class="navbar-inner" style="background-image:linear-gradient(to bottom, #444444, #222222);color: #ADD8E6">
       <div class="container">
         {{is_mobile=request.user_agent().is_mobile}}
         <!-- the next tag is necessary for bootstrap menus, do not remove -->
@@ -149,11 +150,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        {{=response.logo or ''}}
+        <!--{{=response.logo or ''}}-->
+        <a href="{{=URL('default', 'index')}}" data-w2p_disable_with="default" class="brand" style="width:10%">
+            <img src="{{=URL('static','images/logo.png')}}" style="width:100%"/><br>
+            <img src="{{=URL('static','images/logo2.png')}}" style="width:200%;margin-left: 25%"/>
+        </a>
         <ul class="nav pull-right" id="navbar" style="margin-top: 2.4%; margin-right:0;">
             <li class="dropdown">
                 {{if not auth.is_logged_in():}}
-                <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown" style="color: #ADD8E6">Login</a>
                 <ul class="dropdown-menu" style="display: none;">
                     <li onclick="$('#myTab li').removeClass('active');$('#myTab li:first').addClass('active');$('#myTabContent div').removeClass('active in');$('#myTabContent div:first').addClass('active in')"><a rel="nofollow" href="#loginreg" data-toggle="modal" data-w2p_disable_with="default"><i class="icon-user"></i> Register</a></li>
                     <li onclick="$('#myTab li').removeClass('active');$('#myTab li:last').addClass('active');$('#myTabContent div').removeClass('active in');$('#myTabContent div:last').addClass('active in')"><a rel="nofollow" href="#loginreg" data-toggle="modal" data-w2p_disable_with="default"><i class="icon-lock"></i> Lost password?</a></li>
@@ -162,7 +167,7 @@
                     </li>
                 </ul>
                 {{else: }}
-                    <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown">Welcome {{=auth.user.first_name}}</a>
+                    <a rel="nofollow" href="#" data-w2p_disable_with="default" class="dropdown-toggle" data-toggle="dropdown" style="color: #ADD8E6;max-width: 100px">Welcome {{=auth.user.first_name}}</a>
                     <ul class="dropdown-menu" style="display: none;">
                         <li><a rel="nofollow" href="/foodopediaa/default/user/profile" data-w2p_disable_with="default"><i class="icon-user"></i> Profile</a></li>
                         <li><a rel="nofollow" href="/foodopediaa/default/user/change_password?_next=/foodopediaa/default/index" data-w2p_disable_with="default"><i class="icon-lock"></i> Password</a></li>
@@ -176,15 +181,15 @@
         <!--<ul id="navbar" class="nav pull-right">{{='auth' in globals() and auth.navbar(mode="dropdown") or ''}}</ul>-->
         <div style="margin-right:2%; margin-top:3.2%; float:right; margin-left:0;" class="{{='nav-collapse' if is_mobile else 'nav'}}">
           {{if response.menu:}}
-          <a href="{{=URL('default','index')}}">HOME</a>
+          <a href="{{=URL('default','index')}}" style="color: #ADD8E6;text-decoration: none">HOME</a>
           {{pass}}
         </div><!--/.nav-collapse -->
        <div  class="nav" style="margin-right:4%; margin-top:3.2%; float:right; margin-left:0;">
-          <a href="/foodopediaa/default/user/login?_next=/foodopediaa/default/add_recipe">Add Recipe</a>
+          <a href="/foodopediaa/default/user/login?_next=/foodopediaa/default/add_recipe" style="color: #ADD8E6;text-decoration: none">Add Recipe</a>
         </div>
 
-        <form id="searchbox" action="/{{=request.application}}/default/search" onsubmit="alert(1);">
-     <fieldset id="f1" style="margin-left:3%; padding:0;width:96%; ">
+        <form id="searchbox" action="/{{=request.application}}/default/search">
+     <fieldset id="f1" style="margin-left:7%; padding:0;width:96%; ">
           <label style="margin-top:0.5%;">Type recipe name or comma separated list of ingredients below</label>
          <div class="control-group">
  <input id="search" name="ingredients" type="text" placeholder="Search for whatever you want to cook">
@@ -192,7 +197,7 @@
     <input id="submit" type="submit" value="Search">
          </div>
     </fieldset>
-    <fieldset id="f2" style="margin-left:3%; padding:0;" >
+    <fieldset id="f2" style="margin-left:7%; padding:0;" >
          <div class="control-group" style="margin-bottom:0; padding:0;">
     <label class="checkbox inline">
         <input type="checkbox" name="category" value="breakfast"> Breakfast
@@ -254,9 +259,9 @@
         </div>
 
         {{ if right_sidebar_enabled:}}
-        <div class="span3">
+        <div class="span2">
             {{block right_sidebar}}
-            <h3>Right Sidebar</h3>
+            
             <p></p>
             {{end}}
         </div>
@@ -344,6 +349,13 @@
   </div> <!-- /container -->
   
 {{end}}
+<script type="text/javascript">
+        {{
+                import random
+                num=str(random.randint(1,5))
+        }}
+        $('body').css('background-image',"url({{=URL('static','images/'+num+'.jpg',host=True)}})");
+  </script>
 {{pass}}
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->
@@ -353,7 +365,7 @@
       <script src="{{=URL('static','js/dd_belatedpng.js')}}"></script>
       <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
       <![endif]-->
-
+  
   {{if response.google_analytics_id:}}
   <script src="{{=URL('static','js/analytics.min.js')}}"></script>
   <script type="text/javascript">

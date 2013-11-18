@@ -64,6 +64,8 @@ def search():
         logger.info(search_terms)
         q = request.vars.category
         logger.info(q)
+        if not request.vars.ingredients and not q:
+            redirect(URL('default','index'))
         if q:
             if not isinstance(q, basestring):
                 query1 = ( # Start off with a default query
@@ -82,9 +84,10 @@ def search():
             query=( # Start off with a default query
                           db.recepies.ingredients.lower().like('%'+ingredients[0]+'%') 
             )
+            query = query | (db.recepies.name.lower().like('%'+ingredients[0]+'%'))
         if len(ingredients)>1:
             for qs in filter(lambda a: a != '', ingredients):
-                query = query | db.recepies.ingredients.lower().like('%'+qs.strip()+'%')
+                query = query | (db.recepies.ingredients.lower().like('%'+qs.strip()+'%')) | (db.recepies.name.lower().like('%'+ingredients[0]+'%'))
         if 'query1' in locals():
             if 'query' in locals():
                 query=query1&query
@@ -116,13 +119,31 @@ def recipes():
         rows = db(query).select()
         if rows:
             if auth.is_logged_in():
-                rated=db(db.user_ratings.user_id==auth.user.id and db.user_ratings.recipe_id==rows[0].id).select(db.user_ratings.rating)
+                rated=db((db.user_ratings.user_id==auth.user.id) & (db.user_ratings.recipe_id==rows[0].id)).select(db.user_ratings.rating)
+                if session.favs:
+                    logger.info('in session')
+                    favortd=session.favs
+                else:
+                    favortd=db(db.user_favs.user_id == auth.user.id).select(db.user_favs.fav_list)
+                    session.favs=favortd
             rating_count=db(db.user_ratings.recipe_id==rows[0].id).select(db.user_ratings.id.count())
+            #logger.info(rated)
             if 'rated' in locals() and rated:
                 rated=rated[0].rating
             else:
                 rated=0
-            return dict(slug=slug,res=rows[0],rated=rated,rating_count=rating_count[0]['COUNT(user_ratings.id)'])
+            if 'favortd' in locals() and favortd:
+                fav=json.loads(favortd[0].fav_list)
+                logger.info(fav)
+                logger.info(rows[0].id)
+                if rows[0].id in fav:
+                    favortd=1
+                else:
+                    favortd=0
+            else:
+                favortd=0
+            logger.info(favortd)
+            return dict(slug=slug,res=rows[0],rated=rated,rating_count=rating_count[0]['COUNT(user_ratings.id)'],fav=favortd)
         raise HTTP(404, "Page not found!!") 
     raise HTTP(404, "Page not found!!") 
 
@@ -137,7 +158,22 @@ def update_rating():
         logger.info("update rating func")
         return avg_rating
     raise HTTP(404, "Page not found!!") 
-
+def favorite():
+    if request.vars.r_id:
+        fav_list=db(db.user_favs.user_id == auth.user.id).select(db.user_favs.fav_list)
+        if fav_list:
+            fav_list=json.loads(fav_list[0].fav_list)
+            fav_list.append(int(request.vars.r_id))
+            db(db.user_favs.user_id == auth.user.id).update(fav_list=json.dumps(fav_list))
+        else:
+            fav_list=[]
+            fav_list.append(int(request.vars.r_id))
+            db.user_favs.insert(user_id=auth.user.id,fav_list=json.dumps(fav_list))
+        db(db.recepies.id==request.vars.r_id).update(fav_count=db.recepies.fav_count+1)
+        session.favs=False
+        return 1;
+    raise HTTP(404, "Page not found!!") 
+        
 def feedback():
     if request.vars.email:
         mail.send(admin_email[0],
@@ -164,6 +200,22 @@ def user():
     """
     db.auth_user.email.widget = lambda f,v: SQLFORM.widgets.string.widget(f, v,
     _placeholder='Enter your email address')
+    if request.args[0] == 'profile':
+        favorited=[]
+        added=[]
+        starred=db(db.user_ratings.user_id==auth.user.id).select(db.user_ratings.id.count())
+        if starred:
+            starred = starred[0]['COUNT(user_ratings.id)']
+        else:
+            starred=0
+        fav_list=db(db.user_favs.user_id == auth.user.id).select(db.user_favs.fav_list)
+        if fav_list:
+            fav_list=json.loads(fav_list[0].fav_list)
+            #logger.info(fav_list)
+            favorited=db(db.recepies.id.belongs(fav_list)).select(db.recepies.id,db.recepies.name,db.recepies.slug,db.recepies.description,db.recepies.name,db.recepies.image_loc,db.recepies.avg_rating)
+        added = db(db.recepies.added_by == auth.user.id).select(db.recepies.id,db.recepies.name,db.recepies.slug,db.recepies.description,db.recepies.name,db.recepies.image_loc,db.recepies.avg_rating)
+        return dict(form=auth(),signin=False,favs=favorited,starred=starred,added=added)
+        
     if request.vars.signin:
         return dict(form=auth(),signin=True)
     return dict(form=auth(),signin=False)

@@ -138,10 +138,11 @@ ul, ol {
 .repo-list-item {
     -moz-box-sizing: border-box;
     border-top: 1px solid #E5E5E5;
-    display: block;
+    display: inline-block;
     font-size: 14px;
     padding: 6px 30px;
     position: relative;
+    width: 90%;
 }
 .repo-list-item .repo-and-owner {
     max-width: 220px;
@@ -199,10 +200,10 @@ ul, ol {
     <div class="span9">
 
 <div id="content" class="clearfix">
-		<section id="left">
+		<section id="left" style="width:100%;margin-left: 3%">
 			<div id="userStats" class="clearfix">
 				<div class="pic">
-					<a href="#"> <img alt="" src="{{if auth.user.profile_picture:}}{{=URL('download',args=auth.user.profile_picture)}}{{else:}}{{=URL('static','images/user_avatar.jpg')}}{{pass}}"></a>
+					<a href="#"> <img style="max-height:200px;" alt="" src="{{if auth.user.profile_picture:}}{{=URL('download',args=auth.user.profile_picture)}}{{else:}}{{=URL('static','images/user_avatar.jpg')}}{{pass}}"></a>
 				</div>
 				
 				<div class="data">
@@ -212,9 +213,9 @@ ul, ol {
 					
 					<div class="sep"></div>
 					<ul class="numbers clearfix">
-						<li>Starred<strong>185</strong></li>
-						<li>Favorited<strong>344</strong></li>
-						<li class="nobrdr">Added<strong>127</strong></li>
+						<li>Starred<strong>{{=starred}}</strong></li>
+						<li>Favorited<strong>{{=len(favs)}}</strong></li>
+						<li class="nobrdr">Added<strong>{{=len(added)}}</strong></li>
 					</ul>
 				</div>
 			</div>
@@ -222,7 +223,7 @@ ul, ol {
 			
 		</section>
 		
-		<section id="right">
+		<!--<section id="right">
 			<div class="gcontent">
 				<div class="head"><h1>Badges(3)</h1></div>
 				<div class="boxy">
@@ -232,16 +233,16 @@ ul, ol {
 						<a href="#"><img src="img/foursquare-badge.png" /></a>
 						<a href="#"><img src="img/foursquare-badge.png" /></a>
 						<a href="#"><img src="img/foursquare-badge.png" /></a>
-					</div>-->
+					</div>
 					
 					<span><a href="#">See all…</a></span>
 				</div>
 			</div>
 			
 			
-		</section>
+		</section>-->
     </div>
-        <section id="left">
+        <section id="left" style="width:100%;margin-left: 3%">
             <div class="tabbable"> <!-- Only required for left/right tabs -->
     <ul class="nav nav-tabs">
     <li class="active"><a href="#tab1" data-toggle="tab">Your Added Recipes</a></li>
@@ -256,81 +257,31 @@ ul, ol {
     <div class="col single-column">
       <div class="box box-small">
         <div class="box-header">
-          <h3 class="box-title">Recipes you have added</h3>
+          <h3 class="box-title">{{if len(added) == 0 :}}You have not added any recipe yet, <a href="{{=URL('default','add_recipe')}}">Click here</a> to add one now!{{else:}}Recipes you have added{{pass}}</h3>
         </div>
         <div class="box-body">
           <ul class="repo-list">
-              
+   {{for res in added:}}           
   <li class="public fork ">
-    <a class="repo-list-item css-truncate" href="/smita786/phpmyadmin">
+    <img src="{{=URL('download',args=res.image_loc)}}" style="height:50px;width: 50px" alt=""/>
+    <a class="repo-list-item css-truncate" href="{{=URL('default','recipes/'+res.slug)}}">
         <span class="repo-icon octicon octicon-repo-forked"></span>
       <span class="repo-and-owner css-truncate-target">
-<span title="phpmyadmin" class="repo">phpmyadmin</span>
+<span title="phpmyadmin" class="repo">{{=res.name}}</span>
       </span>
-      <span class="stars">
-        0
-        <span class="octicon octicon-star"></span>
-      </span>
-      <span class="repo-description css-truncate-target">phpMyAdmin itself</span>
+      <div class="rating_small" style="float:right">
+                {{for i in range(5):}}
+                    {{if i < 5-res.avg_rating:}}
+                        <span>☆</span>
+                    {{else:}}
+                    <span class='val'>☆</span>
+                    {{pass}}
+                {{pass}}
+       </div>
+      <span class="repo-description css-truncate-target">{{=res.description}}</span>
     </a>
   </li>
-
-  <li class="public fork ">
-    <a class="repo-list-item css-truncate" href="/smita786/quickblox-ios-sdk">
-        <span class="repo-icon octicon octicon-repo-forked"></span>
-      <span class="repo-and-owner css-truncate-target">
-<span title="quickblox-ios-sdk" class="repo">quickblox-ios-sdk</span>
-      </span>
-      <span class="stars">
-        0
-        <span class="octicon octicon-star"></span>
-      </span>
-      <span class="repo-description css-truncate-target">quickblox-ios-sdk</span>
-    </a>
-  </li>
-
-  <li class="public fork ">
-    <a class="repo-list-item css-truncate" href="/smita786/ShareKit">
-        <span class="repo-icon octicon octicon-repo-forked"></span>
-      <span class="repo-and-owner css-truncate-target">
-<span title="ShareKit" class="repo">ShareKit</span>
-      </span>
-      <span class="stars">
-        0
-        <span class="octicon octicon-star"></span>
-      </span>
-      <span class="repo-description css-truncate-target">Drop in sharing features for all iPhone and iPad apps</span>
-    </a>
-  </li>
-
-  <li class="public fork ">
-    <a class="repo-list-item css-truncate" href="/smita786/jquery-ui-carousel">
-        <span class="repo-icon octicon octicon-repo-forked"></span>
-      <span class="repo-and-owner css-truncate-target">
-<span title="jquery-ui-carousel" class="repo">jquery-ui-carousel</span>
-      </span>
-      <span class="stars">
-        0
-        <span class="octicon octicon-star"></span>
-      </span>
-      <span class="repo-description css-truncate-target">jQuery RS Carousel is a responsive and touch-enabled carousel written on top of jQuery and the jQuery UI Widget Factory providing a full and familiar API in less than 2.6kB minified and gzipped</span>
-    </a>
-  </li>
-
-  <li class="public source no-description">
-    <a class="repo-list-item css-truncate" href="/smita786/randomStringsSetsGen">
-        <span class="repo-icon octicon octicon-repo"></span>
-      <span class="repo-and-owner css-truncate-target">
-<span title="randomStringsSetsGen" class="repo">randomStringsSetsGen</span>
-      </span>
-      <span class="stars">
-        0
-        <span class="octicon octicon-star"></span>
-      </span>
-      <span class="repo-description css-truncate-target"></span>
-    </a>
-  </li>
-
+{{pass}}
           </ul>
         </div>
       </div>
@@ -340,7 +291,45 @@ ul, ol {
   </div>
     </div>
     <div class="tab-pane" id="tab2">
-   
+   <div class="contributions-tab">
+
+  <!-- POPULAR REPOSITORIES -->
+  <div class="grid popular-repos">
+    <div class="col single-column">
+      <div class="box box-small">
+        <div class="box-header">
+          <h3 class="box-title">{{if len(favs) ==0 :}}You have not favorited any recipe.{{else:}}Recipes you have favorited.{{pass}}</h3>
+        </div>
+        <div class="box-body">
+          <ul class="repo-list">
+   {{for res in favs:}}           
+  <li class="public fork ">
+    <img src="{{=URL('download',args=res.image_loc)}}" style="height:50px;width: 50px" alt=""/>
+    <a class="repo-list-item css-truncate" href="{{=URL('default','recipes/'+res.slug)}}">
+        <span class="repo-icon octicon octicon-repo-forked"></span>
+      <span class="repo-and-owner css-truncate-target">
+<span title="phpmyadmin" class="repo">{{=res.name}}</span>
+      </span>
+      <div class="rating_small" style="float:right">
+                {{for i in range(5):}}
+                    {{if i < 5-res.avg_rating:}}
+                        <span>☆</span>
+                    {{else:}}
+                    <span class='val'>☆</span>
+                    {{pass}}
+                {{pass}}
+       </div>
+      <span class="repo-description css-truncate-target">{{=res.description}}</span>
+    </a>
+  </li>
+{{pass}}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
     </div>
     </div>
     </div>

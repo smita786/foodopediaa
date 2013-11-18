@@ -93,7 +93,8 @@ a.more {
 }
 
 .main{
-        margin: 15% 5% 5%;
+         margin: 15% 6% 5%;
+        width: 85%;
         background-color: wheat;
         border: 1px;
         border-radius: 1%;

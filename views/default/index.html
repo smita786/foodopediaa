@@ -1,17 +1,6 @@
 {{left_sidebar_enabled,right_sidebar_enabled=False,True}}
 {{extend 'layout.html'}}
-<script type="text/javascript">
-    
-        
-        {{
-                import random
-                num=str(random.randint(1,5))
-        }}
-        $('body').css('background-image',"url({{=URL('static','images/'+num+'.jpg',host=True)}})");
-        //document.body.background-image:url("{{=URL('static','images/'+num+'.jpg')}}");
-        //$('body').css('backgroundRepeat',"repeat");// Background repeat
-   // }
-</script>
+
 <div style="width:60%;float: left">
     <div class="carousel slide" id="myCarousel" style="">
                 <div class="carousel-inner">
@@ -121,14 +110,4 @@
 <div style="clear:both;"></div>
 </div>
  
-              
-{{block right_sidebar}}
-{{=A(T("Administrative Interface"), _href=URL('admin','default','index'), _class='btn',
-     _style='margin-top: 1em;')}}
-<h6>{{=T("Don't know what to do?")}}</h6>
-<ul>
-  <li>{{=A(T("Online examples"), _href=URL('examples','default','index'))}}</li>
-  <li><a href="http://web2py.com">web2py.com</a></li>
-  <li><a href="http://web2py.com/book">{{=T('Documentation')}}</a></li>
-</ul>
-{{end}}
+         

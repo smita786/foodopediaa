@@ -19,7 +19,7 @@
             data: { value: value ,r_id:{{=res.id}}}
         })
                 .done(function( new_rating ) {
-                    alert(new_rating);
+                   // alert(new_rating);
                     res="";
                     for(i=0;i<5;i++)
                     {
@@ -29,14 +29,38 @@
                         res+="<span class='val'>☆</span>";
                     }
                     $( ".rating_small" ).html( res );
-                    $("#rating_count").html(parseInt($("#rating_count").html())+1)
+                    $("#rating_count").html(parseInt($("#rating_count").html())+1);
                     });
                     $('.rating input').attr("onclick","return false");
         return false;
     }
+    function add_fav()
+    {
+        {{if not auth.is_logged_in():}}
+            $('#loginreg').modal({
+            keyboard: false
+            });
+            
+            return false
+        {{pass}}
+            $.ajax({
+            type: "POST",
+            url: "{{=URL('default','favorite',host=True)}}",
+            data: {r_id:{{=res.id}}}
+        })
+        $("#fav_icon").css('color',"red");
+        $("#fav_link").html('Your Favourite!');
+        $("#fav_link").attr("onclick","return false;");
+        $("#fav_count").html(parseInt($("#fav_count").html())+1);
+    }
     $(document).ready(function(){
         {{if rated>0:}}
         $('.rating :input[value="{{=rated}}"]').attr("checked","checked");
+        {{pass}}
+        {{if fav>0:}}
+            $("#fav_icon").css('color',"red");
+            $("#fav_link").html('Your Favourite!');
+            $("#fav_link").attr("onclick","return false;");
         {{pass}}
     });
 </script>
@@ -99,9 +123,9 @@
                     {{pass}}
                 {{pass}}
             <!--<span>☆</span><span>☆</span><span class='val'>☆</span><span class='val'>☆</span><span class='val'>☆</span>
-            --></div>&nbsp;&nbsp;<span id='rating_count'>{{=rating_count}}</span> Ratings | 223 added to favorites
-            <span style="float:right"><i class="icon-heart"></i>
-                <a style="color: #590000" href="#">Add to my favorites</a>
+            --></div>&nbsp;&nbsp;<span id='rating_count'>{{=rating_count}}</span> Ratings | <span id='fav_count'>{{=res.fav_count}}</span> added to favorites
+            <span style="float:right"><!--<i class="icon-heart"></i>--><span id="fav_icon" style="color:#333333;font-size: 200%">♥</span> 
+                <a id="fav_link" style="color: #590000;text-decoration:none" href="#" onclick="add_fav();">Add to my favorites</a>
             </span>
         </div>
         <div style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5); padding: 13px;margin-bottom: 1%;margin-top: 1%;display: inline-block;min-width: 95%">
