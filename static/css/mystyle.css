@@ -243,7 +243,7 @@ a.more {
 	 -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
 	 -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
 	 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-        background-image:url('http://i47.tinypic.com/r02vbq.png');
+            background-image: url("{{=URL('static','images/search.png')}}");
 background-repeat:no-repeat;
 background-position:left;outline:0;
 }
