@@ -56,7 +56,7 @@ auth.define_tables(username=False, signature=False)
 mail = auth.settings.mailer
 mail.settings.server = 'smtp.gmail.com:587' 
 mail.settings.sender = 'kumarismita62@gmail.com'
-mail.settings.login = 'kumarismita62@gmail.com:smita007@gmail.com'
+mail.settings.login = 'kumarismita62@gmail.com:***'
 
 ## configure auth policy
 auth.settings.registration_requires_verification = False
